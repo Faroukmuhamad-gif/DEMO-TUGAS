@@ -940,64 +940,42 @@
         </div>
       </section>
 
-     <section id="kas" class="section">
-        <div class="dashboard-grid">
-          <div class="card">
-            <h3>Total Saldo Kas <span class="tooltip-icon" data-tooltip="Akumulasi kas tersisa (Debit - Kredit)">?</span></h3>
-            <div class="amount" id="saldo-display">Rp 0</div>
+      <section id="kas" class="section">
+        <div class="card">
+          <h2 class="section-title">Kas Kelompok</h2>
+          <p class="section-desc">Ruang untuk menampilkan pemasukan, pengeluaran, dan saldo kas kelompok.</p>
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('kas-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
           </div>
-          <div class="card income">
-            <h3>Total Pemasukan <span class="tooltip-icon" data-tooltip="Total seluruh uang masuk (Debit)">?</span></h3>
-            <div class="amount" id="masuk-display">Rp 0</div>
-          </div>
-          <div class="card expense">
-            <h3>Total Pengeluaran <span class="tooltip-icon" data-tooltip="Total seluruh uang keluar (Kredit)">?</span></h3>
-            <div class="amount" id="keluar-display">Rp 0</div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <h2>
-            ➕ Formulir Pengisian Kas Kelompok
-            <span class="active-kub-badge" id="badge-kub">Menambah ke: KUB Sumber Makmur</span>
-          </h2>
-          
-          <form id="kasForm">
-            <input type="hidden" id="nama_kub" name="nama_kub" value="KUB Sumber Makmur">
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Tanggal Transaksi</label>
-                <input type="date" id="tanggal" name="tanggal" class="form-control" required>
-              </div>
+          <div id="kas-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Kas Kelompok</h4>
               <div class="form-group">
                 <label>Jenis Transaksi</label>
-                <select id="jenis" name="jenis" class="form-control" required>
-                  <option value="" disabled selected>-- Pilih Arus Kas --</option>
-                  <option value="Pemasukan">Pemasukan (Uang Masuk / Debit)</option>
-                  <option value="Pengeluaran">Pengeluaran (Uang Keluar / Kredit)</option>
+                <select>
+                  <option value="">Pilih jenis transaksi</option>
+                  <option value="pemasukan">Pemasukan</option>
+                  <option value="pengeluaran">Pengeluaran</option>
                 </select>
               </div>
+              <div class="form-group">
+                <label>Jumlah (Rp)</label>
+                <input type="number" placeholder="Masukkan jumlah uang">
+              </div>
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Keterangan</label>
+                <textarea placeholder="Masukkan keterangan transaksi"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Transaksi</button>
             </div>
-
-            <div class="form-group">
-              <label>Nominal Transaksi (Rp)</label>
-              <input type="number" id="nominal" name="nominal" class="form-control" placeholder="Contoh: 500000 (Tanpa titik/koma)" min="1000" required>
-            </div>
-
-            <div class="form-group">
-              <label>Keterangan / Rincian Transaksi</label>
-              <textarea id="keterangan" name="keterangan" class="form-control" placeholder="Contoh: Hasil lelang ikan tongkol 50Kg / Beli jaring baru" style="min-height: 100px; resize: vertical;" required></textarea>
-            </div>
-
-            <button type="submit" id="submitBtn" class="btn-submit">
-              <i class="fa-solid fa-save"></i> Rekam Transaksi ke Database
-            </button>
-            
-            <div id="status-msg"></div>
-          </form>
+          </div>
         </div>
-        
       </section>
 
       <section id="produksi" class="section">
