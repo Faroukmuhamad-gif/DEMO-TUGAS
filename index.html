@@ -1132,39 +1132,20 @@
           <h2 class="section-title">Iuran Kelompok</h2>
           <p class="section-desc">Ruang pencatatan iuran anggota dan status pembayaran.</p>
           <div class="action-buttons">
-            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('iuran-form')">
-              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
-            </button>
-          </div>
-          <div id="iuran-form" class="form-container">
-            <div class="form-box">
-              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Iuran Kelompok</h4>
-              <div class="form-group">
-                <label>Nama Anggota</label>
-                <input type="text" placeholder="Masukkan nama anggota">
-              </div>
-              <div class="form-group">
-                <label>Bulan Pembayaran</label>
-                <input type="month">
-              </div>
-              <div class="form-group">
-                <label>Nominal Iuran (Rp)</label>
-                <input type="number" placeholder="Masukkan nominal iuran">
-              </div>
-              <div class="form-group">
-                <label>Status Pembayaran</label>
-                <select>
-                  <option value="">Pilih status</option>
-                  <option value="lunas">Lunas</option>
-                  <option value="belum-lunas">Belum Lunas</option>
-                </select>
-              </div>
-              <button type="button" class="btn-submit">Simpan Data Iuran</button>
-            </div>
-          </div>
-        </div>
-      </section>
+            <button class="btn-fill btn-fill-form" type="button" onclick="window.location.href='indexiurankub.html'">
+        <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+      </button>
 
+    </div>
+    <div id="kas-form" class="form-container">
+      <div class="form-box">
+        <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir pengisian aktivtas iuran kelompok</h4>
+        <button type="button" class="btn-submit">Simpan aktivitas kelompok</button>
+      </div>
+    </div>
+  </div>
+        
+</section>
       <section id="simpanan" class="section">
         <div class="card">
           <h2 class="section-title">Simpan Pinjam Kelompok</h2>
