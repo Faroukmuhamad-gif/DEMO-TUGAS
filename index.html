@@ -1,306 +1,1416 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Iuran KUB Nelayan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* =========================================
-           RESET & BASE
-           ========================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; color: #1e293b; }
-        .app-container { display: flex; min-height: 100vh; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Sistem Informasi KUB</title>
 
-        /* =========================================
-           SIDEBAR NAVIGATION
-           ========================================= */
-        .sidebar { width: 260px; background-color: #0f172a; color: white; display: flex; flex-direction: column; position: fixed; height: 100vh; }
-        .brand { padding: 25px 20px; background-color: #020617; text-align: center; border-bottom: 1px solid #1e293b; }
-        .brand h2 { font-size: 18px; color: #38bdf8; }
-        .brand p { font-size: 12px; color: #94a3b8; margin-top: 5px; }
-        
-        .nav-menu { list-style: none; padding: 20px 0; flex: 1; }
-        .nav-menu li { margin-bottom: 5px; }
-        .nav-menu a { display: flex; align-items: center; padding: 12px 20px; color: #cbd5e1; text-decoration: none; font-size: 14px; transition: 0.3s; cursor: pointer; border-left: 4px solid transparent; }
-        .nav-menu a:hover, .nav-menu a.active { background-color: #1e293b; color: white; border-left-color: #38bdf8; }
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* =========================================
-           MAIN CONTENT & HEADER
-           ========================================= */
-        .main-content { margin-left: 260px; flex: 1; padding: 30px; }
-        .header { background-color: #0284c7; color: white; padding: 20px 25px; border-radius: 8px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .header h1 { font-size: 20px; font-weight: 600; }
+  <style>
+    :root{
+      --bg:#f4f7f6;
+      --card:#ffffff;
+      --primary:#1abc9c;
+      --primary-dark:#16a085;
+      --sidebar:#2c3e50;
+      --sidebar-dark:#1a252f;
+      --text:#2d3436;
+      --muted:#636e72;
+      --line:#e5e7eb;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:18px;
+      --sidebar-w:260px;
+      --sidebar-c:76px;
+    }
 
-        /* =========================================
-           TOMBOL DOWNLOAD & TOOLTIP (CSS ONLY)
-           ========================================= */
-        .btn-download {
-            position: relative; 
-            display: inline-flex; align-items: center; gap: 8px;
-            background-color: #10b981; color: white; padding: 10px 18px;
-            text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600;
-            transition: all 0.3s ease; cursor: pointer; border: none;
-        }
-        .btn-download:hover { background-color: #059669; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(26,188,156,.10), transparent 30%),
+        radial-gradient(circle at right top, rgba(52,152,219,.09), transparent 26%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
 
-        .btn-download::after {
-            content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
-            background-color: #1e293b; color: white; padding: 8px 12px; border-radius: 6px; font-size: 12px;
-            white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10; font-weight: 400;
-        }
-        .btn-download::before {
-            content: ""; position: absolute; bottom: 80%; left: 50%; transform: translateX(-50%);
-            border-width: 6px; border-style: solid; border-color: #1e293b transparent transparent transparent;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
-        .btn-download:hover::after { opacity: 1; visibility: visible; bottom: 130%; }
-        .btn-download:hover::before { opacity: 1; visibility: visible; bottom: 105%; }
+    .layout{display:flex;min-height:100vh}
 
-        /* =========================================
-           GRID LAYOUT (FORM KIRI, LIVE REPORT KANAN)
-           ========================================= */
-        .grid-container { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
+    .mobile-toggle{
+      display:none;
+      position:fixed;
+      top:12px;
+      left:12px;
+      z-index:60;
+      width:46px;
+      height:46px;
+      border:none;
+      border-radius:14px;
+      background:var(--sidebar-dark);
+      color:#fff;
+      box-shadow:var(--shadow);
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+    }
 
-        /* =========================================
-           FORM SECTION
-           ========================================= */
-        .content-section { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .content-section h2 { font-size: 16px; margin-bottom: 20px; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .active-kub-badge { background-color: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-        
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #475569; }
-        .form-control { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; font-size: 13px; outline: none; transition: 0.2s; }
-        .form-control:focus { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1); }
-        
-        .btn-submit { background-color: #0284c7; color: white; border: none; padding: 12px 20px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 5px; }
-        .btn-submit:hover { background-color: #0369a1; }
-        .btn-submit:disabled { background-color: #94a3b8; cursor: not-allowed; }
+    .sidebar{
+      width:var(--sidebar-c);
+      background:linear-gradient(180deg, var(--sidebar) 0%, #233140 100%);
+      color:#ecf0f1;
+      position:fixed;
+      inset:0 auto 0 0;
+      z-index:50;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transition:transform .3s ease, width .3s ease;
+    }
 
-        #status-msg { margin-top: 15px; padding: 10px; border-radius: 6px; display: none; font-size: 13px; text-align: center; font-weight: 500; }
-        .status-success { background-color: #d1fae5; color: #065f46; border: 1px solid #34d399; }
-        .status-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+    .sidebar.open,
+    .sidebar:hover{width:var(--sidebar-w)}
 
-        /* =========================================
-           LIVE REPORT SECTION
-           ========================================= */
-        .live-badge { display: flex; align-items: center; gap: 6px; background-color: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
-        .pulse-dot { width: 8px; height: 8px; background-color: #dc2626; border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
-        }
+    .brand{
+      height:76px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:0 18px;
+      background:var(--sidebar-dark);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      white-space:nowrap;
+    }
 
-        .history-list { list-style: none; overflow: hidden; margin-top: 10px; }
-        .history-item { 
-            padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 10px; 
-            display: flex; justify-content: space-between; align-items: center; background-color: #f8fafc;
-            animation: slideDownFadeIn 0.5s ease forwards;
-        }
-        @keyframes slideDownFadeIn {
-            0% { opacity: 0; transform: translateY(-15px); background-color: #dbeafe; }
-            100% { opacity: 1; transform: translateY(0); background-color: #f8fafc; }
-        }
-        .item-info strong { display: block; font-size: 13px; color: #0f172a; margin-bottom: 2px; }
-        .item-info span { font-size: 11px; color: #64748b; }
-        .item-amount { font-size: 14px; font-weight: 700; color: #10b981; }
+    .brand i{color:var(--primary);font-size:24px;min-width:28px;text-align:center}
+    .brand h2{
+      font-size:16px;
+      font-weight:700;
+      opacity:0;
+      transition:.25s ease;
+    }
+    .sidebar.open .brand h2,
+    .sidebar:hover .brand h2{opacity:1}
 
-        @media (max-width: 768px) {
-            .sidebar { display: none; } /* Simplified for snippet */
-            .main-content { margin-left: 0; }
-            .grid-container { grid-template-columns: 1fr; }
-        }
-    </style>
+    .sidebar-menu{list-style:none;padding:12px 0}
+    .menu-item{margin:6px 10px}
+
+    .menu-toggle{
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:14px;
+      border:none;
+      background:transparent;
+      color:#cbd5e1;
+      cursor:pointer;
+      border-radius:14px;
+      transition:.25s ease;
+      font:inherit;
+      text-align:left;
+    }
+
+    .menu-toggle i{width:28px;text-align:center;font-size:18px}
+    .menu-label{opacity:0;transition:.25s ease;white-space:nowrap;font-size:14px;font-weight:500}
+    .sidebar.open .menu-label,
+    .sidebar:hover .menu-label{opacity:1}
+    .menu-toggle:hover,
+    .menu-toggle.active{background:rgba(255,255,255,.08);color:#fff}
+
+    .submenu{
+      list-style:none;
+      margin:0 0 0 18px;
+      padding-left:18px;
+      border-left:1px dashed rgba(255,255,255,.18);
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .35s ease;
+    }
+
+    .menu-item.open .submenu{max-height:900px}
+
+    .submenu a{
+      display:block;
+      padding:10px 12px;
+      margin:4px 0;
+      border-radius:10px;
+      color:#d7dee6;
+      text-decoration:none;
+      font-size:13px;
+      transition:.2s ease;
+      white-space:nowrap;
+    }
+
+    .submenu a:hover{background:rgba(26,188,156,.16);color:#fff}
+
+    .main{
+      margin-left:var(--sidebar-c);
+      width:calc(100% - var(--sidebar-c));
+      padding:20px;
+      transition:margin-left .3s ease,width .3s ease;
+    }
+
+    .sidebar.open ~ .main,
+    .sidebar:hover ~ .main{
+      margin-left:var(--sidebar-w);
+      width:calc(100% - var(--sidebar-w));
+    }
+
+    .topbar{
+      background:rgba(255,255,255,.72);
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,.7);
+      box-shadow:var(--shadow);
+      border-radius:22px;
+      padding:18px 20px;
+      margin-bottom:18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .topbar h1{font-size:22px;color:#1f2d3d;margin-bottom:4px}
+    .topbar p{color:var(--muted);font-size:13px}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff;
+      color:#34495e;
+      border:1px solid var(--line);
+      font-size:13px;
+      box-shadow:0 4px 14px rgba(0,0,0,.04);
+    }
+
+    .top-nav{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:10px 14px;
+      margin-bottom:18px;
+      position:sticky;
+      top:12px;
+      z-index:20;
+    }
+
+    .top-nav ul{
+      list-style:none;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .top-nav a{
+      display:block;
+      text-decoration:none;
+      color:#34495e;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      transition:.25s ease;
+      background:#f8fafc;
+    }
+
+    .top-nav a:hover,
+    .top-nav a.active{background:var(--primary);color:#fff}
+
+    .top-nav .btn-nav-register{
+      background:#1abc9c;
+      color:#fff;
+    }
+
+    .top-nav .btn-nav-register:hover{
+      background:#16a085;
+    }
+
+    .top-nav .btn-nav-evaluate{
+      background:#3498db;
+      color:#fff;
+    }
+
+    .top-nav .btn-nav-evaluate:hover{
+      background:#2980b9;
+    }
+
+    .section{display:none;animation:fadeIn .35s ease}
+    .section.active{display:block}
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.6);
+      padding:20px;
+      margin-bottom:18px;
+    }
+
+    .section-title{font-size:20px;margin-bottom:12px;color:#213547}
+    .section-desc{color:var(--muted);margin-bottom:16px;line-height:1.7;font-size:14px}
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .tab-btn{
+      border:none;
+      background:#eef4f6;
+      color:#34495e;
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font-family:inherit;
+      transition:.25s ease;
+      min-height:42px;
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover{background:var(--primary);color:#fff}
+
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    .table-wrap{
+      width:100%;
+      overflow-x:auto;
+      border:1px solid #e9edf2;
+      border-radius:14px;
+      background:#fff;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:620px;
+    }
+
+    th,td{
+      border:1px solid #e9edf2;
+      padding:12px 14px;
+      text-align:left;
+      vertical-align:top;
+      font-size:14px;
+    }
+
+    th{background:#f8fbfc;font-weight:600}
+
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#e8f8f5;
+      color:#0f766e;
+      font-size:12px;
+      font-weight:600;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .fish-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 8px 22px rgba(0,0,0,.06);
+      transition:.25s ease;
+    }
+
+    .fish-card:hover{transform:translateY(-4px)}
+    .fish-card img{width:100%;height:180px;object-fit:cover;display:block}
+    .fish-card .body{padding:16px}
+    .fish-card h4{margin-bottom:8px;font-size:16px}
+    .fish-card p{font-size:13px;line-height:1.6;color:var(--muted)}
+
+    .info-box{
+      padding:18px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#fff,#fbfdff);
+    }
+
+    .info-box h4{margin-bottom:8px;font-size:15px}
+    .info-box p{color:var(--muted);line-height:1.7;font-size:14px}
+
+    /* Style untuk button Akses Layanan di section */
+    .action-buttons{
+      display:flex;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .btn-fill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:12px 20px;
+      border:none;
+      border-radius:14px;
+      font-family:'Poppins',sans-serif;
+      font-size:14px;
+      font-weight:500;
+      cursor:pointer;
+      transition:.25s ease;
+      box-shadow:0 4px 14px rgba(0,0,0,.1);
+      text-decoration:none;
+    }
+
+    .btn-fill-view{
+      background:#3498db;
+      color:#fff;
+    }
+
+    .btn-fill-view:hover{
+      background:#2980b9;
+      transform:translateY(-2px);
+    }
+
+    .btn-fill-form{
+      background:var(--primary);
+      color:#fff;
+    }
+
+    .btn-fill-form:hover{
+      background:var(--primary-dark);
+      transform:translateY(-2px);
+    }
+
+    .form-container{
+      display:none;
+      animation:fadeIn .3s ease;
+    }
+
+    .form-container.active{
+      display:block;
+    }
+
+    .form-box{
+      background:#f8fafc;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:20px;
+      margin-top:16px;
+    }
+
+    .form-group{
+      margin-bottom:16px;
+    }
+
+    .form-group label{
+      display:block;
+      margin-bottom:6px;
+      font-size:14px;
+      font-weight:500;
+      color:#2c3e50;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea{
+      width:100%;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      font-family:'Poppins',sans-serif;
+      font-size:14px;
+      transition:.25s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus{
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(26,188,156,.1);
+    }
+
+    .form-group textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+
+    .btn-submit{
+      background:var(--primary);
+      color:#fff;
+      padding:12px 24px;
+      border:none;
+      border-radius:12px;
+      font-family:'Poppins',sans-serif;
+      font-size:14px;
+      font-weight:500;
+      cursor:pointer;
+      transition:.25s ease;
+    }
+
+    .btn-submit:hover{
+      background:var(--primary-dark);
+    }
+
+    @media (max-width: 992px){
+      .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+
+    @media (max-width: 768px){
+      .mobile-toggle{display:flex}
+
+      .sidebar{
+        transform:translateX(-100%);
+        width:var(--sidebar-w);
+      }
+
+      .sidebar.open{transform:translateX(0)}
+
+      .main,
+      .sidebar.open ~ .main,
+      .sidebar:hover ~ .main{
+        margin-left:0;
+        width:100%;
+        padding:70px 14px 14px;
+      }
+
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .top-actions{justify-content:flex-start}
+      .top-nav{position:static}
+      .top-nav ul{justify-content:flex-start}
+      .cards{grid-template-columns:1fr}
+      .card{padding:16px}
+      .section-title{font-size:18px}
+      .top-nav a{width:100%;text-align:center}
+      .action-buttons{flex-direction:column}
+      .btn-fill{width:100%;justify-content:center}
+    }
+
+    @media (max-width: 480px){
+      .topbar h1{font-size:18px}
+      .pill{width:100%;justify-content:center}
+      .tab-btn{width:100%}
+    }
+  </style>
 </head>
 <body>
+  <button class="mobile-toggle" id="mobileToggle" aria-controls="sidebar" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
-    <div class="app-container">
-        <aside class="sidebar">
-            <div class="brand">
-                <h2>Iuran KUB</h2>
-                <p>Sistem Pencatatan Iuran</p>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-ship"></i>
+        <h2>Portal KUB</h2>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-item open">
+          <button class="menu-toggle active" type="button" onclick="toggleSubmenu(this)" aria-expanded="true">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+            <span class="menu-label">Menu Utama</span>
+          </button>
+
+          <ul class="submenu">
+            <li><a href="#agenda" onclick="showSection('agenda', this)">Tamu Kelompok / Agenda Surat</a></li>
+            <li><a href="#kas" onclick="showSection('kas', this)">Kas Kelompok</a></li>
+            <li><a href="#produksi" onclick="showSection('produksi', this)">Produksi Kelompok / Hasil Tangkapan</a></li>
+            <li><a href="#notulen" onclick="showSection('notulen', this)">Notulen Rapat Kelompok</a></li>
+            <li><a href="#rencana-kegiatan" onclick="showSection('rencana-kegiatan', this)">Rencana Kegiatan Kelompok</a></li>
+            <li><a href="#rub" onclick="showSection('rub', this)">Rencana Usaha Bersama</a></li>
+            <li><a href="#inventaris" onclick="showSection('inventaris', this)">Inventaris Barang Kelompok</a></li>
+            <li><a href="#iuran" onclick="showSection('iuran', this)">Iuran Kelompok</a></li>
+            <li><a href="#simpanan" onclick="showSection('simpanan', this)">Simpan Pinjam Kelompok</a></li>
+            <li><a href="#aktivitas" onclick="showSection('aktivitas', this)">Aktivitas Kelompok</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Portal Sistem Informasi KUB</h1>
+          <p>Dashboard profil, data dasar, keanggotaan, komoditas, dan menu administrasi kelompok.</p>
+        </div>
+        <div class="top-actions">
+          <span class="pill"><i class="fa-solid fa-users"></i> 4 KUB</span>
+          <span class="pill"><i class="fa-solid fa-fish"></i> 5 Komoditas Unggulan</span>
+          <span class="pill"><i class="fa-solid fa-chart-line"></i> Sistem Informasi</span>
+        </div>
+      </div>
+
+      <nav class="top-nav">
+        <ul>
+          <li><a href="#sejarah" class="active" onclick="showSection('sejarah', this)">Sejarah Kelompok</a></li>
+          <li><a href="#data-dasar" onclick="showSection('data-dasar', this)">Data Dasar</a></li>
+          <li><a href="#keanggotaan" onclick="showSection('keanggotaan', this)">Data Keanggotaan</a></li>
+          <li><a href="#komoditas" onclick="showSection('komoditas', this)">Data Komoditas</a></li>
+          <li><a href="#pendaftaran" class="btn-nav-register" onclick="showSection('pendaftaran', this)">
+            <i class="fa-solid fa-user-plus"></i> Pendaftaran
+          </a></li>
+          <li><a href="#penilaian" class="btn-nav-evaluate" onclick="showSection('penilaian', this)">
+            <i class="fa-solid fa-star"></i> Penilaian
+          </a></li>
+        </ul>
+      </nav>
+
+      <section id="sejarah" class="section active">
+        <div class="card">
+          <h2 class="section-title">Sejarah Kelompok</h2>
+          <p class="section-desc">Berikut ini sejarah singkat terbentuknya KUB.</p>
+
+          <div class="tabs" role="tablist" aria-label="Sejarah KUB">
+            <button class="tab-btn active" type="button" onclick="showTab(event,'kub1')" aria-selected="true">KUB Sumber Makmur</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'kub2')" aria-selected="false">KUB Angsa Laut</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'kub3')" aria-selected="false">KUB Intimung Taka</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'kub4')" aria-selected="false">KUB Usaha Nelayan</button>
+          </div>
+
+          <div id="kub1" class="tab-panel active" role="tabpanel">
+            <div class="info-box">
+              <h4>KUB Sumber Makmur</h4>
+              <p>Didirikan untuk meningkatkan kemampuan masyarakat dalam menghadapi berbagai permasalahan dan kebutuhannya melalui pemberdayaan nelayan dengan tujuan meningkatkan pendapatan dan menciptakan lapangan pekerjaan.</p>
             </div>
-            <ul class="nav-menu">
-                <li><a class="nav-link active" data-kub="KUB Sumber Makmur">🌊 KUB Sumber Makmur</a></li>
-                <li><a class="nav-link" data-kub="KUB Angsa Laut">🚢 KUB Angsa Laut</a></li>
-                <li><a class="nav-link" data-kub="KUB Intimung Taka">⭐ KUB Intimung Taka</a></li>
-                <li><a class="nav-link" data-kub="KUB Usaha Bersama">🤝 KUB Usaha Bersama</a></li>
-            </ul>
-        </aside>
+          </div>
 
-        <main class="main-content">
-            <header class="header">
-                <h1 id="header-title">Dashboard Iuran: KUB Sumber Makmur</h1>
-                <a href="#" id="btn-excel-download" class="btn-download" data-tooltip="Klik untuk mengunduh Laporan Iuran format .xlsx" target="_blank">
-                    📥 Unduh Rekap
-                </a>
-            </header>
-
-            <div class="grid-container">
-                <div class="content-section">
-                    <h2>
-                        ➕ Form Setor Iuran
-                        <span class="active-kub-badge" id="badge-kub">Tujuan: KUB Sumber Makmur</span>
-                    </h2>
-                    
-                    <form id="iuranForm">
-                        <input type="hidden" id="nama_kub" name="nama_kub" value="KUB Sumber Makmur">
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Waktu & Tanggal Pengisian</label>
-                                <input type="datetime-local" id="waktu_tanggal" name="waktu_tanggal" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Nama Penyetor / Pengisi</label>
-                                <input type="text" id="nama_pengisi" name="nama_pengisi" class="form-control" placeholder="Contoh: Budi Santoso" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Nominal Iuran (Rp)</label>
-                            <input type="number" id="nominal" name="nominal" class="form-control" placeholder="Contoh: 50000" min="1000" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Keterangan</label>
-                            <input type="text" id="keterangan" name="keterangan" class="form-control" placeholder="Contoh: Iuran wajib bulan Mei" required>
-                        </div>
-
-                        <button type="submit" id="submitBtn" class="btn-submit">Kirim Data Iuran ke Spreadsheet</button>
-                        <div id="status-msg"></div>
-                    </form>
-                </div>
-
-                <div class="content-section">
-                    <h2>
-                        Riwayat Setoran
-                        <div class="live-badge">
-                            <div class="pulse-dot"></div>
-                            LIVE
-                        </div>
-                    </h2>
-                    <ul class="history-list" id="live-feed">
-                        <li class="history-item">
-                            <div class="item-info">
-                                <strong>Menunggu setoran...</strong>
-                                <span>Sistem siap menerima data.</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+          <div id="kub2" class="tab-panel" role="tabpanel">
+            <div class="info-box">
+              <h4>KUB Angsa Laut</h4>
+              <p>Berawal dari kumpulan nelayan yang melakukan penangkapan secara individu. Banyak masalah tidak dapat diselesaikan sendiri, sehingga terbentuklah KUB ini sebagai wadah penyelesaian bersama.</p>
             </div>
-        </main>
-    </div>
+          </div>
 
-    <script>
-        // ==============================================================================
-        // 1. LINK GOOGLE APPS SCRIPT & SPREADSHEET (DARI USER)
-        // ==============================================================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxiMIkT3ceXB4le1KNLJ2byxml17x4ecuHNdK3M28gG21HMU3TGYAPK_uX1egGEQqfOzw/exec'; 
-        const SHEET_ID = '1RgyVkhFbBeGEL-x9O7iiVdl_yShqwQwRtNa8gM0AOlo';
+          <div id="kub3" class="tab-panel" role="tabpanel">
+            <div class="info-box">
+              <h4>KUB Intimung Taka</h4>
+              <p>Berasal dari Kabupaten Bulungan yang memiliki potensi perikanan besar, tetapi masih terkendala teknologi, modal, dan kondisi sosial ekonomi. KUB dibentuk untuk mempercepat perkembangan usaha tangkap ikan.</p>
+            </div>
+          </div>
 
-        // Set Link Unduh Otomatis ke Spreadsheet Tersebut
-        // Catatan: GID "0" biasanya adalah Sheet pertama (Sheet1/Data_Iuran).
-        const btnExcel = document.getElementById('btn-excel-download');
-        btnExcel.href = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=xlsx&gid=0`;
+          <div id="kub4" class="tab-panel" role="tabpanel">
+            <div class="info-box">
+              <h4>KUB Usaha Nelayan</h4>
+              <p>Terbentuk melalui musyawarah para penangkap ikan dengan tujuan meningkatkan kerja sama, akses pemasaran, dan kapasitas sumber daya manusia nelayan dalam kelompok.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        // ==============================================================================
-        // 2. LOGIKA NAVIGASI (SIDEBAR)
-        // ==============================================================================
-        const navLinks = document.querySelectorAll('.nav-link');
-        const headerTitle = document.getElementById('header-title');
-        const badgeKub = document.getElementById('badge-kub');
-        const inputNamaKub = document.getElementById('nama_kub');
+      <section id="data-dasar" class="section">
+        <div class="card">
+          <h2 class="section-title">Data Dasar</h2>
+          <p class="section-desc">Berikut profil singkat KUB.</p>
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                
-                const selectedKUB = this.getAttribute('data-kub');
-                headerTitle.innerText = "Dashboard Iuran: " + selectedKUB;
-                badgeKub.innerText = "Tujuan: " + selectedKUB;
-                inputNamaKub.value = selectedKUB;
-            });
-        });
+          <div class="tabs" role="tablist" aria-label="Data dasar KUB">
+            <button class="tab-btn active" type="button" onclick="showTab(event,'dasar1')" aria-selected="true">KUB Sumber Makmur</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'dasar2')" aria-selected="false">KUB Angsa Laut</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'dasar3')" aria-selected="false">KUB Intimung Taka</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'dasar4')" aria-selected="false">KUB Usaha Nelayan</button>
+          </div>
 
-        // Set Datetime Local otomatis ke waktu sekarang
-        const setWaktuSekarang = () => {
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            document.getElementById('waktu_tanggal').value = now.toISOString().slice(0,16);
-        };
-        setWaktuSekarang();
+          <div id="dasar1" class="tab-panel active" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama KUB</th>
+                    <th>Tahun Berdiri</th>
+                    <th>Status</th>
+                    <th>Nama Pendiri/Ketua</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>KUB Sumber Makmur</td>
+                    <td>2013</td>
+                    <td><span class="badge">Aktif</span></td>
+                    <td>Junaidi</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-        // ==============================================================================
-        // 3. LOGIKA PENGIRIMAN FORMULIR (POST KE APPS SCRIPT)
-        // ==============================================================================
-        const form = document.getElementById('iuranForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const statusMsg = document.getElementById('status-msg');
-        const feedContainer = document.getElementById('live-feed');
+          <div id="dasar2" class="tab-panel" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama KUB</th>
+                    <th>Tahun Berdiri</th>
+                    <th>Status</th>
+                    <th>Nama Pendiri/Ketua</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>KUB Angsa Laut</td>
+                    <td>2023</td>
+                    <td><span class="badge">Aktif</span></td>
+                    <td>Muchsin</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-        // Fungsi Format Uang
-        const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
+          <div id="dasar3" class="tab-panel" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama KUB</th>
+                    <th>Tahun Berdiri</th>
+                    <th>Status</th>
+                    <th>Nama Pendiri/Ketua</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>KUB Intimung Taka</td>
+                    <td>2014</td>
+                    <td><span class="badge">Aktif</span></td>
+                    <td>Adria Saputra</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            submitBtn.disabled = true;
-            submitBtn.innerText = 'Mengirim data...';
-            
-            // Simpan data untuk dimunculkan di Live Report setelah berhasil
-            const namaPenanda = document.getElementById('nama_pengisi').value;
-            const kubPenanda = document.getElementById('nama_kub').value;
-            const ketPenanda = document.getElementById('keterangan').value;
-            const nominalPenanda = document.getElementById('nominal').value;
+          <div id="dasar4" class="tab-panel" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama KUB</th>
+                    <th>Tahun Berdiri</th>
+                    <th>Status</th>
+                    <th>Nama Pendiri/Ketua</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>KUB Usaha Nelayan</td>
+                    <td>2015</td>
+                    <td><span class="badge">Aktif</span></td>
+                    <td>Sukardiman</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            const formData = new FormData(form);
-            const data = new URLSearchParams();
-            for (const pair of formData) { data.append(pair[0], pair[1]); }
+      <section id="keanggotaan" class="section">
+        <div class="card">
+          <h2 class="section-title">Data Keanggotaan</h2>
+          <p class="section-desc">Setiap KUB memiliki anggota dengan struktur jabatan yang berbeda.</p>
 
-            fetch(SCRIPT_URL, { method: 'POST', body: data })
-            .then(response => response.json())
-            .then(result => {
-                if(result.result === "success") {
-                    statusMsg.className = 'status-success';
-                    statusMsg.innerText = '✅ Data berhasil terkirim ke Google Sheets!';
-                    
-                    // Tambahkan ke Live Report List
-                    const waktuSekarang = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                    const li = document.createElement('li');
-                    li.className = 'history-item';
-                    li.innerHTML = `
-                        <div class="item-info">
-                            <strong>${namaPenanda} - ${kubPenanda}</strong>
-                            <span>${ketPenanda} • Baru saja (${waktuSekarang})</span>
-                        </div>
-                        <div class="item-amount">+ ${formatRupiah(nominalPenanda)}</div>
-                    `;
-                    feedContainer.prepend(li);
-                    
-                    // Bersihkan form
-                    form.reset();
-                    setWaktuSekarang();
-                    document.getElementById('nama_kub').value = kubPenanda; // Kembalikan value hidden
-                } else { throw new Error("Gagal"); }
-            })
-            .catch(error => {
-                statusMsg.className = 'status-error';
-                statusMsg.innerText = '❌ Terjadi kesalahan koneksi ke Spreadsheet.';
-            })
-            .finally(() => {
-                statusMsg.style.display = 'block';
-                submitBtn.disabled = false;
-                submitBtn.innerText = 'Kirim Data Iuran ke Spreadsheet';
-                setTimeout(() => { statusMsg.style.display = 'none'; }, 5000);
-            });
-        });
-    </script>
+          <div class="tabs" role="tablist" aria-label="Keanggotaan KUB">
+            <button class="tab-btn active" type="button" onclick="showTab(event,'anggota1')" aria-selected="true">KUB Sumber Makmur</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'anggota2')" aria-selected="false">KUB Angsa Laut</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'anggota3')" aria-selected="false">KUB Intimung Taka</button>
+            <button class="tab-btn" type="button" onclick="showTab(event,'anggota4')" aria-selected="false">KUB Usaha Nelayan</button>
+          </div>
+
+          <div id="anggota1" class="tab-panel active" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Anggota</th>
+                    <th>Jabatan</th>
+                    <th>Alamat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>Junaidi</td><td>Ketua</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>2</td><td>Nanang</td><td>Sekretaris</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>3</td><td>Desir</td><td>Bendahara</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>4</td><td>Supyan</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>5</td><td>Agus Efendi</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>6</td><td>Hoirul Anam</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>7</td><td>Efendi</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>8</td><td>Muzakki</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>9</td><td>Hanif</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>10</td><td>M. Amin</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>11</td><td>Subairi</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>12</td><td>Kadin</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>13</td><td>Syaiful</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>14</td><td>Moh Syafii</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>15</td><td>Saiful Suhdi</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                  <tr><td>16</td><td>Sofi</td><td>Anggota</td><td>Desa Klampis Timur</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="anggota2" class="tab-panel" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Anggota</th>
+                    <th>Jabatan</th>
+                    <th>Alamat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>Muchsin</td><td>Ketua</td><td>SAMKAI</td></tr>
+                  <tr><td>2</td><td>Abdul Karim</td><td>Sekretaris</td><td>SAMKAI</td></tr>
+                  <tr><td>3</td><td>Zulkarnaen Arifin</td><td>Bendahara</td><td>SAMKAI</td></tr>
+                  <tr><td>4</td><td>Arifin</td><td>Anggota</td><td>SAMKAI</td></tr>
+                  <tr><td>5</td><td>Sudirman A</td><td>Anggota</td><td>SAMKAI</td></tr>
+                  <tr><td>6</td><td>Nasir DG Mamu</td><td>Anggota</td><td>SAMKAI</td></tr>
+                  <tr><td>7</td><td>Alimuddin</td><td>Anggota</td><td>SAMKAI</td></tr>
+                  <tr><td>8</td><td>Mustafa</td><td>Anggota</td><td>SAMKAI</td></tr>
+                  <tr><td>9</td><td>Manai</td><td>Anggota</td><td>SAMKAI</td></tr>
+                  <tr><td>10</td><td>Amiruddin</td><td>Anggota</td><td>SAMKAI</td></tr>
+                  <tr><td>11</td><td>Rusli</td><td>Anggota</td><td>SAMKAI</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="anggota3" class="tab-panel" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Anggota</th>
+                    <th>Jabatan</th>
+                    <th>Alamat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>Adria Saputra</td><td>Ketua</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>2</td><td>Nanang Jainal M.</td><td>Sekretaris</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>3</td><td>Sukirman</td><td>Bendahara</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>4</td><td>Achmad Yani</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>5</td><td>Achmad Lubis</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>6</td><td>Hamidun</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>7</td><td>M. Noor</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>8</td><td>Mahmud</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>9</td><td>Nasrun</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>10</td><td>Saparudin</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>11</td><td>Abdullah</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                  <tr><td>12</td><td>Abdullah</td><td>Anggota</td><td>Jl. Manunggal RT.06 Desa Bunyu Barat Kec. Bunyu</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="anggota4" class="tab-panel" role="tabpanel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Anggota</th>
+                    <th>Jabatan</th>
+                    <th>Alamat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>Sukardiman</td><td>Ketua</td><td>Desa Watusa</td></tr>
+                  <tr><td>2</td><td>Hasan</td><td>Sekretaris</td><td>Desa Watusa</td></tr>
+                  <tr><td>3</td><td>Madi</td><td>Bendahara</td><td>Desa Watusa</td></tr>
+                  <tr><td>4</td><td>Anto</td><td>Anggota</td><td>Desa Watusa</td></tr>
+                  <tr><td>5</td><td>Muh Ansar</td><td>Anggota</td><td>Desa Watusa</td></tr>
+                  <tr><td>6</td><td>Arifin K</td><td>Anggota</td><td>Desa Watusa</td></tr>
+                  <tr><td>7</td><td>Arfa</td><td>Anggota</td><td>Desa Watusa</td></tr>
+                  <tr><td>8</td><td>Kambe</td><td>Anggota</td><td>Desa Watusa</td></tr>
+                  <tr><td>9</td><td>Lakali</td><td>Anggota</td><td>Desa Watusa</td></tr>
+                  <tr><td>10</td><td>Sukaryo</td><td>Anggota</td><td>Desa Watusa</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="komoditas" class="section">
+        <div class="card">
+          <h2 class="section-title">Data Komoditas Perikanan</h2>
+          <p class="section-desc">Lima komoditas unggulan yang dimiliki setiap KUB.</p>
+
+          <div class="cards">
+            <div class="fish-card">
+              <img src="TunaFish.jpg" alt="Ikan tuna segar">
+              <div class="body">
+                <h4>Ikan Tuna</h4>
+                <p>Komoditas bernilai tinggi dengan permintaan pasar yang stabil untuk konsumsi lokal dan ekspor.</p>
+              </div>
+            </div>
+
+            <div class="fish-card">
+              <img src="TongkolFish.jpg" alt="Ikan tongkol">
+              <div class="body">
+                <h4>Ikan Tongkol</h4>
+                <p>Salah satu hasil tangkapan utama yang menjadi andalan nelayan dalam kegiatan harian.</p>
+              </div>
+            </div>
+
+            <div class="fish-card">
+              <img src="Shrimp.jpg" alt="Udang segar">
+              <div class="body">
+                <h4>Udang</h4>
+                <p>Komoditas unggulan bernilai ekonomi tinggi dengan peluang budidaya dan perdagangan yang besar.</p>
+              </div>
+            </div>
+
+            <div class="fish-card">
+              <img src="cumi.jpg" alt="Cumi-cumi segar">
+              <div class="body">
+                <h4>Cumi-cumi</h4>
+                <p>Produk perikanan yang banyak diminati untuk pasar kuliner karena kualitas dan cita rasanya.</p>
+              </div>
+            </div>
+
+            <div class="fish-card">
+              <img src="crab.jpg" alt="Kepiting segar">
+              <div class="body">
+                <h4>Kepiting</h4>
+                <p>Komoditas premium dengan nilai jual tinggi serta peluang pengembangan usaha yang menjanjikan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pendaftaran" class="section">
+        <div class="card">
+          <h2 class="section-title">Pendaftaran Anggota/Komoditas Baru</h2>
+          <p class="section-desc">Formulir pendaftaran anggota baru atau komoditas baru ke dalam sistem KUB.</p>
+          <div class="info-box">
+            <h4>Formulir Pendaftaran</h4>
+            <p>Halaman formulir pendaftaran akan muncul di sini.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="penilaian" class="section">
+        <div class="card">
+          <h2 class="section-title">Penilaian Kinerja/Komoditas</h2>
+          <p class="section-desc">Formulir penilaian kinerja anggota atau kualitas komoditas perikanan.</p>
+          <div class="info-box">
+            <h4>Formulir Penilaian</h4>
+            <p>Halaman formulir penilaian akan muncul di sini.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="agenda" class="section">
+        <div class="card">
+          <h2 class="section-title">Tamu Kelompok / Agenda Surat</h2>
+          <p class="section-desc">Ruang untuk mencatat tamu, surat masuk, dan agenda kegiatan kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('agenda-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="agenda-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Tamu Kelompok / Agenda Surat</h4>
+              <div class="form-group">
+                <label>Nama Tamu / Judul Surat</label>
+                <input type="text" placeholder="Masukkan nama tamu atau judul surat">
+              </div>
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Kategori</label>
+                <select>
+                  <option value="">Pilih kategori</option>
+                  <option value="tamu">Tamu Kedatangan</option>
+                  <option value="surat-masuk">Surat Masuk</option>
+                  <option value="agenda">Agenda Kegiatan</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Keterangan</label>
+                <textarea placeholder="Masukkan keterangan additional"></textarea>
+              </div>
+              <button type="button" class="btn-submit">
+                <i class="fa-solid fa-save"></i> Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="kas" class="section">
+        <div class="card">
+          <h2 class="section-title">Kas Kelompok</h2>
+          <p class="section-desc">Ruang untuk menampilkan pemasukan, pengeluaran, dan saldo kas kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('kas-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="kas-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Kas Kelompok</h4>
+              <div class="form-group">
+                <label>Jenis Transaksi</label>
+                <select>
+                  <option value="">Pilih jenis transaksi</option>
+                  <option value="pemasukan">Pemasukan</option>
+                  <option value="pengeluaran">Pengeluaran</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Jumlah (Rp)</label>
+                <input type="number" placeholder="Masukkan jumlah uang">
+              </div>
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Keterangan</label>
+                <textarea placeholder="Masukkan keterangan transaksi"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Transaksi</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="produksi" class="section">
+        <div class="card">
+          <h2 class="section-title">Produksi Kelompok / Hasil Tangkapan</h2>
+          <p class="section-desc">Ruang untuk mencatat hasil tangkapan dan produksi per periode.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('produksi-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="produksi-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Produksi Kelompok</h4>
+              <div class="form-group">
+                <label>Jenis Ikan/Komoditas</label>
+                <select>
+                  <option value="">Pilih komoditas</option>
+                  <option value="tuna">Ikan Tuna</option>
+                  <option value="tongkol">Ikan Tongkol</option>
+                  <option value="udang">Udang</option>
+                  <option value="cumi">Cumi-cumi</option>
+                  <option value="kepiting">Kepiting</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Jumlah Tangkapan (kg)</label>
+                <input type="number" placeholder="Masukkan jumlah dalam kg">
+              </div>
+              <div class="form-group">
+                <label>Tanggal Tangkapan</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Nama Nelayan</label>
+                <input type="text" placeholder="Masukkan nama nelayan">
+              </div>
+              <button type="button" class="btn-submit">Simpan Data Produksi</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="notulen" class="section">
+        <div class="card">
+          <h2 class="section-title">Notulen Rapat Kelompok</h2>
+          <p class="section-desc">Ruang dokumentasi hasil rapat dan keputusan kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('notulen-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="notulen-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Notulen Rapat</h4>
+              <div class="form-group">
+                <label>Tanggal Rapat</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Judul/Agenda Rapat</label>
+                <input type="text" placeholder="Masukkan judul rapat">
+              </div>
+              <div class="form-group">
+                <label>Peserta Rapat</label>
+                <input type="text" placeholder="Masukkan nama peserta">
+              </div>
+              <div class="form-group">
+                <label>Hasil Rapat / Keputusan</label>
+                <textarea placeholder="Masukkan hasil rapat atau keputusan"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Notulen</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rencana-kegiatan" class="section">
+        <div class="card">
+          <h2 class="section-title">Rencana Kegiatan Kelompok</h2>
+          <p class="section-desc">Ruang penyusunan agenda kegiatan kelompok ke depan.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('rencana-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="rencana-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Rencana Kegiatan</h4>
+              <div class="form-group">
+                <label>Nama Kegiatan</label>
+                <input type="text" placeholder="Masukkan nama kegiatan">
+              </div>
+              <div class="form-group">
+                <label>Tanggal Rencana</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Lokasi</label>
+                <input type="text" placeholder="Masukkan lokasi kegiatan">
+              </div>
+              <div class="form-group">
+                <label>Deskripsi Kegiatan</label>
+                <textarea placeholder="Masukkan deskripsi kegiatan"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Rencana Kegiatan</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rub" class="section">
+        <div class="card">
+          <h2 class="section-title">Rencana Usaha Bersama</h2>
+          <p class="section-desc">Ruang perencanaan usaha kolektif untuk pengembangan kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('rub-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="rub-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Rencana Usaha Bersama</h4>
+              <div class="form-group">
+                <label>Nama Usaha</label>
+                <input type="text" placeholder="Masukkan nama usaha">
+              </div>
+              <div class="form-group">
+                <label>Jenis Usaha</label>
+                <select>
+                  <option value="">Pilih jenis usaha</option>
+                  <option value="tangkap">Usaha Tangkap</option>
+                  <option value="budidaya">Budidaya</option>
+                  <option value="pengolahan">Pengolahan Ikan</option>
+                  <option value="pemasaran">Pemasaran</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Anggaran (Rp)</label>
+                <input type="number" placeholder="Masukkan anggaran">
+              </div>
+              <div class="form-group">
+                <label>Deskripsi Rencana</label>
+                <textarea placeholder="Masukkan deskripsi rencana usaha"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Rencana Usaha</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="inventaris" class="section">
+        <div class="card">
+          <h2 class="section-title">Inventaris Barang Kelompok</h2>
+          <p class="section-desc">Ruang pendataan perlengkapan, aset, dan barang milik kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('inventaris-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="inventaris-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Inventaris Barang</h4>
+              <div class="form-group">
+                <label>Nama Barang</label>
+                <input type="text" placeholder="Masukkan nama barang">
+              </div>
+              <div class="form-group">
+                <label>Kategori</label>
+                <select>
+                  <option value="">Pilih kategori</option>
+                  <option value="perlengkapan">Perlengkapan</option>
+                  <option value="aset">Aset</option>
+                  <option value="peralatan">Peralatan</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Jumlah</label>
+                <input type="number" placeholder="Masukkan jumlah">
+              </div>
+              <div class="form-group">
+                <label>Tanggal Perolehan</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Keterangan</label>
+                <textarea placeholder="Masukkan keterangan barang"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Inventaris</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="iuran" class="section">
+        <div class="card">
+          <h2 class="section-title">Iuran Kelompok</h2>
+          <p class="section-desc">Ruang pencatatan iuran anggota dan status pembayaran.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('iuran-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="iuran-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Iuran Kelompok</h4>
+              <div class="form-group">
+                <label>Nama Anggota</label>
+                <input type="text" placeholder="Masukkan nama anggota">
+              </div>
+              <div class="form-group">
+                <label>Jenis Iuran</label>
+                <select>
+                  <option value="">Pilih jenis iuran</option>
+                  <option value="bulanan">Iuran Bulanan</option>
+                  <option value="tahunan">Iuran Tahunan</option>
+                  <option value="khusus">Iuran Khusus</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Jumlah Iuran (Rp)</label>
+                <input type="number" placeholder="Masukkan jumlah iuran">
+              </div>
+              <div class="form-group">
+                <label>Bulan/Tahun</label>
+                <input type="month">
+              </div>
+              <div class="form-group">
+                <label>Status Pembayaran</label>
+                <select>
+                  <option value="">Pilih status</option>
+                  <option value="lunas">Lunas</option>
+                  <option value="belum">Belum Lunas</option>
+                </select>
+              </div>
+              <button type="button" class="btn-submit">Simpan Iuran</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="simpanan" class="section">
+        <div class="card">
+          <h2 class="section-title">Simpan Pinjam Kelompok</h2>
+          <p class="section-desc">Ruang pengelolaan simpanan, pinjaman, dan pelunasan anggota.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('simpanan-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="simpanan-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Simpan Pinjam</h4>
+              <div class="form-group">
+                <label>Nama Anggota</label>
+                <input type="text" placeholder="Masukkan nama anggota">
+              </div>
+              <div class="form-group">
+                <label>Jenis Transaksi</label>
+                <select>
+                  <option value="">Pilih jenis transaksi</option>
+                  <option value="simpanan">Simpanan</option>
+                  <option value="pinjaman">Pinjaman</option>
+                  <option value="pelunasan">Pelunasan</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Jumlah (Rp)</label>
+                <input type="number" placeholder="Masukkan jumlah">
+              </div>
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Keterangan</label>
+                <textarea placeholder="Masukkan keterangan"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Transaksi</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="aktivitas" class="section">
+        <div class="card">
+          <h2 class="section-title">Aktivitas Kelompok</h2>
+          <p class="section-desc">Ruang untuk menampilkan aktivitas harian, mingguan, dan bulanan kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('aktivitas-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
+
+          <div id="aktivitas-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Aktivitas Kelompok</h4>
+              <div class="form-group">
+                <label>Jenis Aktivitas</label>
+                <select>
+                  <option value="">Pilih jenis aktivitas</option>
+                  <option value="harian">Harian</option>
+                  <option value="mingguan">Mingguan</option>
+                  <option value="bulanan">Bulanan</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nama Aktivitas</label>
+                <input type="text" placeholder="Masukkan nama aktivitas">
+              </div>
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Deskripsi Aktivitas</label>
+                <textarea placeholder="Masukkan deskripsi aktivitas"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Aktivitas</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+    const sidebar = document.getElementById('sidebar');
+    const mobileToggle = document.getElementById('mobileToggle');
+
+    function toggleSidebar(){
+      sidebar.classList.toggle('open');
+      const expanded = sidebar.classList.contains('open');
+      mobileToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+
+    function showSection(id, el){
+      sections.forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(id);
+      if(target) target.classList.add('active');
+
+      document.querySelectorAll('.top-nav a').forEach(a => a.classList.remove('active'));
+      if(el) el.classList.add('active');
+
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    function showTab(event, id){
+      const card = event.target.closest('.card');
+      const tabs = card.querySelectorAll('.tab-btn');
+      const panels = card.querySelectorAll('.tab-panel');
+
+      tabs.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+
+      panels.forEach(panel => panel.classList.remove('active'));
+
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+      event.target.setAttribute('aria-selected', 'true');
+    }
+
+    function toggleSubmenu(btn){
+      const item = btn.closest('.menu-item');
+      item.classList.toggle('open');
+      btn.classList.toggle('active');
+      btn.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false');
+    }
+
+    // Fungsi untuk toggle form pengisian
+    function toggleForm(formId){
+      const form = document.getElementById(formId);
+      if(form){
+        form.classList.toggle('active');
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('.submenu a');
+      if (link && window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  </script>
 </body>
 </html>
