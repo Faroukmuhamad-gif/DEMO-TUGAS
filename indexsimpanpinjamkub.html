@@ -3,25 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandbox: Form, Spreadsheet & Looker Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
+    <title>Sistem Keuangan & Simpan Pinjam KUB Perikanan</title>
     <style>
-        /* ==========================================================================
-           VARIABLE & BASE STYLES
-           ========================================================================== */
         :root {
-            --bg: #f4f7f6;
-            --card: #ffffff;
-            --primary: #0078d4;
-            --primary-dark: #005a9e;
-            --primary-light: #e1dfdd;
-            --text: #2d3436;
-            --muted: #636e72;
-            --line: #e5e7eb;
-            --shadow: 0 10px 30px rgba(0,0,0,.06);
-            --radius: 18px;
+            --primary-color: #0b5345;
+            --secondary-color: #117a65;
+            --accent-color: #e8f8f5;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f2f4f4;
+            --border-color: #d5dbdb;
+            --warning-color: #e67e22;
         }
 
         * {
@@ -30,195 +22,370 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background:
-                radial-gradient(circle at top left, rgba(0, 120, 212, 0.08), transparent 30%),
-                radial-gradient(circle at right top, rgba(52, 152, 219, 0.06), transparent 26%),
-                var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding: 20px;
+            line-height: 1.5;
         }
 
-        /* ==========================================================================
-           STICKY NAVIGATION BAR (STYLING REVISI)
-           ========================================================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--text-light);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 22pt;
+            text-transform: uppercase;
+        }
+
+        header p {
+            color: var(--secondary-color);
+            font-size: 11pt;
+            font-style: italic;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-left: 6px solid var(--secondary-color);
+            padding-left: 12px;
+            margin: 30px 0 15px 0;
+            font-size: 13pt;
+            text-transform: uppercase;
+        }
+
+        /* Grid Finansial */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: var(--accent-color);
+            border: 1px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .summary-card h4 {
+            color: var(--text-dark);
+            font-size: 11pt;
+            margin-bottom: 8px;
+        }
+
+        .summary-card .amount {
+            font-size: 16pt;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Styling Tabel */
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.5pt;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 8.5pt;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .badge-lancar { background-color: #d4efdf; color: #196f3d; }
+        .badge-pud { background-color: #ebf5fb; color: #2471a3; }
+
+        /* Form Simulasi */
+        .simulasi-box {
+            background: #fdfefe;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 10pt;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 10pt;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 10pt;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fcf3cf;
+            border-left: 5px solid var(--warning-color);
+            font-size: 10pt;
+            display: none;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 9pt;
+            color: #7f8c8d;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sistem Manajemen Simpan Pinjam Keuangan</h1>
+        <h2>Konsolidasi Tabungan & Kredit Mikro 4 KUB Perikanan Binaan</h2>
+        <p>Akses Terintegrasi Dana Usaha Nelayan Pokkan Mandiri KKP</p>
+    </header>
+
+    <h2 class="section-title">I. Ringkasan Kas & Kapasitas Fiskal Bersama</h2>
+    <div class="summary-grid">
+        <div class="summary-card">
+            <h4>Total Kas Simpanan Masuk</h4>
+            <div class="amount">Rp 18.540.000</div>
+        </div>
+        <div class="summary-card">
+            <h4>Dana Terpinjam Anggota</h4>
+            <div class="amount">Rp 7.500.000</div>
+        </div>
+        <div class="summary-card">
+            <h4>Alokasi Kas Idle Nelayan</h4>
+            <div class="amount">Rp 11.040.000</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">II. Jurnal Buku Kas Simpan Pinjam Per Kelompok Usaha</h2>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama KUB / Wilayah</th>
+                    <th>No. Registrasi Kelompok</th>
+                    <th>Estimasi Omset Tahunan</th>
+                    <th>Alokasi Pokok Tabungan (1%)</th>
+                    <th>Maksimal Plafon Kredit/Anggota</th>
+                    <th>Status Kas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>KUB Intimung Taka</strong><br>Bulungan, Kaltara</td>
+                    <td>1.2.65.01.0814.0914</td>
+                    <td>Rp 60.000.000 (Estimasi)</td>
+                    <td>Rp 600.000</td>
+                    <td>Rp 3.000.000</td>
+                    <td><span class="badge-status badge-lancar">Stabil / Mandiri</span></td>
+                </tr>
+                <tr>
+                    <td><strong>KUB Angsa Laut 01</strong><br>Merauke, Papua Selatan</td>
+                    <td>1.2.93.01.0223.0223</td>
+                    <td>Rp 50.000.000 (Kumulatif 2023)</td>
+                    <td>Rp 500.000</td>
+                    <td>Rp 2.500.000</td>
+                    <td><span class="badge-status badge-lancar">Aktif / Berjalan</span></td>
+                </tr>
+                <tr>
+                    <td><strong>KUB Usaha Nelayan</strong><br>Konawe, Sulawesi Tenggara</td>
+                    <td>1.2.74.02.17.0215.0516</td>
+                    <td>Rp 35.000.000 (PUD Rawa)</td>
+                    <td>Rp 350.000</td>
+                    <td>Rp 1.500.000</td>
+                    <td><span class="badge-status badge-pud">Khusus PUD Air Tawar</span></td>
+                </tr>
+                <tr>
+                    <td><strong>KUB Sumber Makmur</strong><br>Bangkalan, Jawa Timur</td>
+                    <td>411.61/022/433.105/2013</td>
+                    <td>Rp 40.000.000 (Jaring Payang)</td>
+                    <td>Rp 400.000</td>
+                    <td>Rp 2.000.000</td>
+                    <td><span class="badge-status badge-lancar">Aktif / Bulanan</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-title">III. Rincian Kebijakan Operasional Keuangan Mikro</h2>
+    <div style="font-size: 10pt; margin-bottom: 20px;">
+        <p style="margin-bottom: 8px;"><strong>1. KUB Intimung Taka (Bulungan):</strong> Pendanaan simpan pinjam diprioritaskan bagi 12 anggota untuk kebutuhan darurat perbaikan mesin kapal perikanan (Satminkal BPPP Bitung) serta pengadaan bahan bakar jaring insang (Gill net).</p>
+        <p style="margin-bottom: 8px;"><strong>2. KUB Angsa Laut 01 (Merauke):</strong> Aturan simpanan disetorkan pada pertemuan rutin wajib (2-3 kali sebulan). Skema pembiayaan digunakan secara bergantian bagi 11 anggota untuk mengimbangi fluktuasi omset akibat sistem sewa/pemberdayaan armada bersama perahu Semang 15 PK.</p>
+        <p style="margin-bottom: 8px;"><strong>3. KUB Usaha Nelayan (Konawe):</strong> Alokasi kas bersumber dari tabungan nelayan rawa PUD dengan rata-rata omset anggota sebesar Rp 2,
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandbox: Form, Spreadsheet & Looker Studio</title>
+    <style>
+        /* Reset & Base Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Navigation Menu (Sticky) */
         nav {
             position: -webkit-sticky; /* Untuk Safari */
             position: sticky;
             top: 0;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-            padding: 14px 20px;
+            background-color: #0078d4;
+            padding: 12px 0;
             display: flex;
             justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            flex-wrap: wrap; /* Agar responsif jika menu penuh di layar kecil */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
             z-index: 1000;
         }
 
         nav a {
-            color: var(--muted);
+            color: white;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-            padding: 8px 18px;
-            border-radius: 12px;
-            transition: all .25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        nav a i {
-            font-size: 14px;
+            font-weight: 600;
+            margin: 5px 15px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
         }
 
         nav a:hover {
-            color: var(--primary);
-            background: rgba(0, 120, 212, 0.08);
+            background-color: #005a9e;
         }
 
-        /* Mengaktifkan visual tombol jika berada di halaman aktif (bisa dikombinasikan dengan JS) */
-        nav a.active {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.2);
-        }
-
-        /* ==========================================================================
-           LAYOUT CONTENT & CARDS
-           ========================================================================== */
+        /* Container & Layout */
         .main-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 30px 20px;
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
         }
 
         .container {
             width: 100%;
-            background: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            padding: 30px;
+            max-width: 800px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             margin-bottom: 30px;
             box-sizing: border-box;
-            animation: fadeIn 0.5s ease;
-            /* Memberikan ruang di atas judul section saat link menu diklik */
-            scroll-margin-top: 100px; 
+            /* Memberikan ruang agar scroll navigasi pas di judul section */
+            scroll-margin-top: 80px; 
         }
 
         h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2d3d;
-            margin-bottom: 22px;
-            border-bottom: 2px solid #e4e6eb;
-            padding-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: #333;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 8px;
+            margin-top: 0;
         }
 
-        h2 i {
-            color: var(--primary);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ==========================================================================
-           RESPONSIVE IFRAME DEVELOPMENTS
-           ========================================================================== */
         .iframe-wrapper {
             position: relative;
             width: 100%;
             overflow: hidden;
-            border-radius: 10px;
-            background: #fff;
+            margin-top: 15px;
         }
 
+        /* Wrapper khusus konten responsif/bisa di-scroll */
         .scroll-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            border: 1px solid var(--line);
         }
 
         iframe {
             width: 100%;
             border: none;
             display: block;
-            border-radius: 10px;
-        }
-
-        /* ==========================================================================
-           RESPONSIVE MEDIA QUERIES
-           ========================================================================== */
-        @media (max-width: 768px) {
-            nav {
-                padding: 10px;
-                gap: 6px;
-            }
-
-            nav a {
-                font-size: 12px;
-                padding: 6px 12px;
-                border-radius: 8px;
-            }
-
-            .main-content {
-                padding: 15px 10px;
-            }
-
-            .container {
-                padding: 18px;
-                border-radius: 14px;
-                margin-bottom: 20px;
-                scroll-margin-top: 120px;
-            }
-
-            h2 {
-                font-size: 17px;
-                margin-bottom: 16px;
-            }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#form-section" class="active" onclick="setNavActive(this)">
-            <i class="fa-solid fa-wpforms"></i> Input Form
-        </a>
-        <a href="#kepuasan-section" onclick="setNavActive(this)">
-            <i class="fa-solid fa-square-poll-horizontal"></i> Tingkat Kepuasan
-        </a>
-        <a href="#sheet-section" onclick="setNavActive(this)">
-            <i class="fa-solid fa-table"></i> Data Spreadsheet
-        </a>
-        <a href="#looker-section" onclick="setNavActive(this)">
-            <i class="fa-solid fa-chart-line"></i> Looker Studio
-        </a>
+        <a href="#form-section">Input Form</a>
+        <a href="#kepuasan-section">Tingkat Kepuasan</a>
+        <a href="#sheet-section">Data Spreadsheet</a>
+        <a href="#looker-section">Looker Studio</a>
     </nav>
 
     <div class="main-content">
 
         <div id="form-section" class="container">
-            <h2><i class="fa-solid fa-wpforms"></i> Formulir Input Data</h2>
+            <h2>Formulir Input Data</h2>
             <div class="iframe-wrapper">
                 <iframe 
                     src="https://docs.google.com/forms/d/e/1FAIpQLSfZV9gT6iZRiCIWHV48GlOulTJD4QUX4Yog3pE5DT1r05ZIzA/viewform?embedded=true" 
@@ -232,7 +399,7 @@
         </div>
 
         <div id="kepuasan-section" class="container">
-            <h2><i class="fa-solid fa-square-poll-horizontal"></i> Tingkat Kepuasan Sistem Pinjam Kelompok</h2>
+            <h2>Tingkat Kepuasan Sistem Pinjam Kelompok</h2>
             <div class="iframe-wrapper">
                 <iframe 
                     src="https://docs.google.com/forms/d/e/1FAIpQLSdDRtVqTzxXR8q9p_9zHnKSI4_6SgczhxFNLJmdQNMLNwBDzQ/viewform?embedded=true" 
@@ -246,7 +413,7 @@
         </div>
 
         <div id="sheet-section" class="container">
-            <h2><i class="fa-solid fa-table"></i> Respons / Data Spreadsheet</h2>
+            <h2>Respons / Data Spreadsheet</h2>
             <div class="iframe-wrapper scroll-wrapper">
                 <iframe 
                     src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpr_thg_SR74w-ANSCE0_VRBO6EUuSeUFeCb3efjG7YnfNg6YJEBNbtO5PAbrqYv21OTMQt8XGcZif/pubhtml?widget=true&amp;headers=false" 
@@ -258,7 +425,7 @@
         </div>
 
         <div id="looker-section" class="container">
-            <h2><i class="fa-solid fa-chart-line"></i> Sajian Data Looker Studio</h2>
+            <h2>Sajian Data Looker Studio</h2>
             <div class="iframe-wrapper scroll-wrapper">
                 <iframe 
                     src="https://datastudio.google.com/embed/reporting/5e2ab76f-d512-4dcf-818c-4230e5630242/page/page_12345" 
@@ -273,15 +440,6 @@
         </div>
 
     </div>
-
-    <script>
-        function setNavActive(element) {
-            document.querySelectorAll('nav a').forEach(link => {
-                link.classList.remove('active');
-            });
-            element.classList.add('active');
-        }
-    </script>
 
 </body>
 </html>
