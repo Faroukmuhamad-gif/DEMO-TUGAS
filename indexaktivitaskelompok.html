@@ -63,7 +63,7 @@
         }
 
         .sidebar.open ~ .main,
-        .sidebar:hover ~ .main {
+            .sidebar:hover ~ .main {
             margin-left: var(--sidebar-w);
             width: calc(100% - var(--sidebar-w));
         }
@@ -103,7 +103,7 @@
         }
 
         .sidebar.open,
-        .sidebar:hover {
+            .sidebar:hover {
             width: var(--sidebar-w);
         }
 
@@ -133,13 +133,42 @@
         }
 
         .sidebar.open .brand h2,
-        .sidebar:hover .brand h2 {
+            .sidebar:hover .brand h2 {
             opacity: 1;
+        }
+
+        /* Tambahan Style khusus Tombol Beranda Utama di Sidebar */
+        .btn-sidebar-home {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 12px 10px 6px;
+            padding: 14px;
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .25s ease;
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.25);
+        }
+        
+        .btn-sidebar-home i {
+            width: 28px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .btn-sidebar-home:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 20px rgba(22, 160, 133, 0.4);
+            transform: translateY(-1px);
         }
 
         .sidebar-menu {
             list-style: none;
-            padding: 12px 0;
+            padding: 6px 0 12px;
         }
 
         .menu-item {
@@ -178,12 +207,12 @@
         }
 
         .sidebar.open .menu-label,
-        .sidebar:hover .menu-label {
+            .sidebar:hover .menu-label {
             opacity: 1;
         }
 
         .menu-toggle:hover,
-        .menu-toggle.active {
+            .menu-toggle.active {
             background: rgba(255,255,255,.08);
             color: #fff;
             border-left: 3px solid var(--primary);
@@ -216,6 +245,29 @@
         .topbar p {
             color: var(--muted);
             font-size: 13px;
+        }
+
+        /* Tambahan Style Tombol Beranda di Topbar */
+        .btn-topbar-home {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: var(--sidebar);
+            border: 1px solid var(--line);
+            padding: 10px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .btn-topbar-home:hover {
+            background: var(--sidebar);
+            color: #fff;
+            border-color: var(--sidebar);
         }
 
         .container {
@@ -309,6 +361,12 @@
                 border-radius: 14px;
             }
 
+            .btn-topbar-home {
+                width: 100%;
+                justify-content: center;
+                margin-top: 5px;
+            }
+
             .container {
                 padding: 16px;
             }
@@ -335,6 +393,12 @@
                 <i class="fa-solid fa-chart-pie"></i>
                 <h2>Dashboard Hub</h2>
             </div>
+
+            <a href="index.html" class="btn-sidebar-home">
+                <i class="fa-solid fa-house"></i>
+                <span class="menu-label">Beranda Utama</span>
+            </a>
+
             <ul class="sidebar-menu">
                 <li class="menu-item">
                     <a href="#bagian-form" class="menu-toggle active" onclick="setActiveLink(this)">
@@ -369,6 +433,9 @@
                     <h1>Portal Hub Informasi Terpadu</h1>
                     <p>Integrasi Google Form, Live Spreadsheet, dan Visualisasi Looker Studio</p>
                 </div>
+                <a href="index.html" class="btn-topbar-home">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke index.html
+                </a>
             </div>
 
             <div id="bagian-form" class="container">
@@ -405,19 +472,16 @@
     <script>
         const sidebar = document.getElementById('sidebar');
 
-        // Fungsi buka/tutup sidebar khusus perangkat Smartphone/Mobile
         function toggleSidebar() {
             sidebar.classList.toggle('open');
         }
 
-        // Fungsi memberikan tanda 'active' (berwarna putih & bergaris hijau) saat menu diklik
         function setActiveLink(element) {
             document.querySelectorAll('.menu-toggle').forEach(link => {
                 link.classList.remove('active');
             });
             element.classList.add('active');
 
-            // Otomatis menutup sidebar setelah klik menu (khusus di layar HP)
             if (window.innerWidth <= 768) {
                 sidebar.classList.remove('open');
             }
