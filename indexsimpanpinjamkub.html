@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandbox: Form, Spreadsheet & Looker Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           VARIABLE & BASE STYLES
+           ========================================================================== */
+        :root {
+            --bg: #f4f7f6;
+            --card: #ffffff;
+            --primary: #0078d4;
+            --primary-dark: #005a9e;
+            --primary-light: #e1dfdd;
+            --text: #2d3436;
+            --muted: #636e72;
+            --line: #e5e7eb;
+            --shadow: 0 10px 30px rgba(0,0,0,.06);
+            --radius: 18px;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(0, 120, 212, 0.08), transparent 30%),
+                radial-gradient(circle at right top, rgba(52, 152, 219, 0.06), transparent 26%),
+                var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ==========================================================================
+           STICKY NAVIGATION BAR (STYLING REVISI)
+           ========================================================================== */
+        nav {
+            position: -webkit-sticky; /* Untuk Safari */
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            z-index: 1000;
+        }
+
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 8px 18px;
+            border-radius: 12px;
+            transition: all .25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a i {
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            background: rgba(0, 120, 212, 0.08);
+        }
+
+        /* Mengaktifkan visual tombol jika berada di halaman aktif (bisa dikombinasikan dengan JS) */
+        nav a.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.2);
+        }
+
+        /* ==========================================================================
+           LAYOUT CONTENT & CARDS
+           ========================================================================== */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 100%;
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+            animation: fadeIn 0.5s ease;
+            /* Memberikan ruang di atas judul section saat link menu diklik */
+            scroll-margin-top: 100px; 
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2d3d;
+            margin-bottom: 22px;
+            border-bottom: 2px solid #e4e6eb;
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 i {
+            color: var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           RESPONSIVE IFRAME DEVELOPMENTS
+           ========================================================================== */
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .scroll-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--line);
+        }
+
+        iframe {
+            width: 100%;
+            border: none;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* ==========================================================================
+           RESPONSIVE MEDIA QUERIES
+           ========================================================================== */
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px;
+                gap: 6px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 6px 12px;
+                border-radius: 8px;
+            }
+
+            .main-content {
+                padding: 15px 10px;
+            }
+
+            .container {
+                padding: 18px;
+                border-radius: 14px;
+                margin-bottom: 20px;
+                scroll-margin-top: 120px;
+            }
+
+            h2 {
+                font-size: 17px;
+                margin-bottom: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#form-section" class="active" onclick="setNavActive(this)">
+            <i class="fa-solid fa-wpforms"></i> Input Form
+        </a>
+        <a href="#kepuasan-section" onclick="setNavActive(this)">
+            <i class="fa-solid fa-square-poll-horizontal"></i> Tingkat Kepuasan
+        </a>
+        <a href="#sheet-section" onclick="setNavActive(this)">
+            <i class="fa-solid fa-table"></i> Data Spreadsheet
+        </a>
+        <a href="#looker-section" onclick="setNavActive(this)">
+            <i class="fa-solid fa-chart-line"></i> Looker Studio
+        </a>
+    </nav>
+
+    <div class="main-content">
+
+        <div id="form-section" class="container">
+            <h2><i class="fa-solid fa-wpforms"></i> Formulir Input Data</h2>
+            <div class="iframe-wrapper">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSfZV9gT6iZRiCIWHV48GlOulTJD4QUX4Yog3pE5DT1r05ZIzA/viewform?embedded=true" 
+                    height="2019" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">
+                    Memuat…
+                </iframe>
+            </div>
+        </div>
+
+        <div id="kepuasan-section" class="container">
+            <h2><i class="fa-solid fa-square-poll-horizontal"></i> Tingkat Kepuasan Sistem Pinjam Kelompok</h2>
+            <div class="iframe-wrapper">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSdDRtVqTzxXR8q9p_9zHnKSI4_6SgczhxFNLJmdQNMLNwBDzQ/viewform?embedded=true" 
+                    height="2323" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">
+                    Memuat…
+                </iframe>
+            </div>
+        </div>
+
+        <div id="sheet-section" class="container">
+            <h2><i class="fa-solid fa-table"></i> Respons / Data Spreadsheet</h2>
+            <div class="iframe-wrapper scroll-wrapper">
+                <iframe 
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpr_thg_SR74w-ANSCE0_VRBO6EUuSeUFeCb3efjG7YnfNg6YJEBNbtO5PAbrqYv21OTMQt8XGcZif/pubhtml?widget=true&amp;headers=false" 
+                    height="500" 
+                    frameborder="0">
+                    Memuat…
+                </iframe>
+            </div>
+        </div>
+
+        <div id="looker-section" class="container">
+            <h2><i class="fa-solid fa-chart-line"></i> Sajian Data Looker Studio</h2>
+            <div class="iframe-wrapper scroll-wrapper">
+                <iframe 
+                    src="https://datastudio.google.com/embed/reporting/5e2ab76f-d512-4dcf-818c-4230e5630242/page/page_12345" 
+                    height="450" 
+                    frameborder="0" 
+                    style="border:0" 
+                    allowfullscreen 
+                    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+                    Memuat…
+                </iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function setNavActive(element) {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
