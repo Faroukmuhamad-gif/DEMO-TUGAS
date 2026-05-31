@@ -1170,40 +1170,19 @@
           <h2 class="section-title">Simpan Pinjam Kelompok</h2>
           <p class="section-desc">Ruang pengelolaan simpanan, pinjaman, dan pelunasan anggota.</p>
           <div class="action-buttons">
-            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('simpanan-form')">
-              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
-            </button>
-          </div>
-          <div id="simpanan-form" class="form-container">
-            <div class="form-box">
-              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Simpan Pinjam</h4>
-              <div class="form-group">
-                <label>Nama Anggota</label>
-                <input type="text" placeholder="Masukkan nama anggota">
-              </div>
-              <div class="form-group">
-                <label>Jenis Transaksi</label>
-                <select>
-                  <option value="">Pilih transaksi</option>
-                  <option value="simpanan-wajib">Simpanan Wajib</option>
-                  <option value="simpanan-pokok">Simpanan Pokok</option>
-                  <option value="pinjaman">Pinjaman</option>
-                  <option value="angsuran">Angsuran Pinjaman</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Nominal (Rp)</label>
-                <input type="number" placeholder="Masukkan nominal">
-              </div>
-              <div class="form-group">
-                <label>Tanggal Transaksi</label>
-                <input type="date">
-              </div>
-              <button type="button" class="btn-submit">Simpan Data Transaksi</button>
-            </div>
-          </div>
-        </div>
-      </section>
+            <button class="btn-fill btn-fill-form" type="button" onclick="window.location.href='indexasimpanpinjamkub.html'">
+        <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+      </button>
+
+    </div>
+    <div id="kas-form" class="form-container">
+      <div class="form-box">
+        <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir pengisian aktivtas simpan pinjam</h4>
+        <button type="button" class="btn-submit">Simpan aktivitas kelompok</button>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section id="aktivitas" class="section">
         <div class="card">
