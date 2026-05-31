@@ -237,103 +237,6 @@
             padding-bottom: 12px;
         }
 
-        .section-desc {
-            color: var(--muted);
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        /* ==========================================================================
-           BUTTONS & FORM STYLES
-           ========================================================================== */
-        .action-buttons {
-            margin-bottom: 15px;
-        }
-
-        .btn-fill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: .25s ease;
-        }
-
-        .btn-fill-form {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-fill-form:hover {
-            background: var(--primary-dark);
-        }
-
-        .form-container {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .form-container.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .form-box {
-            background: #f8f9fa;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .btn-submit {
-            background: var(--sidebar);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            cursor: pointer;
-            transition: .25s ease;
-        }
-
-        .btn-submit:hover {
-            background: var(--sidebar-dark);
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -452,12 +355,6 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#bagian-aktivitas" class="menu-toggle" onclick="setActiveLink(this)">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <span class="menu-label">Aktivitas Kelompok</span>
-                    </a>
-                </li>
-                <li class="menu-item">
                     <a href="#bagian-kepuasan" class="menu-toggle" onclick="setActiveLink(this)">
                         <i class="fa-solid fa-square-poll-horizontal"></i>
                         <span class="menu-label">Tingkat Kepuasan</span>
@@ -484,7 +381,7 @@
             <div id="bagian-sheet" class="container">
                 <h2>Hasil Data Spreadsheet</h2>
                 <div class="iframe-wrapper sheet-wrapper">
-                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRLK-a5_dCm-pZQ0vEKddV7ff7-n-jBNSLqh-8RJ71eqTL79xNUrYSkcpm16aa8fxBRgmynTcght0l8/pubhtml?gid=1490475136&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRM11fTl2P00gavAILiYFHLVMArgpnh_3rlBSjcxLQk063Z5JkbRT9-X9UaqSRh2y2Lf9OBhRTA8TAm/pubhtml?widget=true&amp;headers=false"></iframe>
                 </div>
             </div>
 
@@ -492,38 +389,6 @@
                 <h2>Sajian Data Looker Studio</h2>
                 <div class="iframe-wrapper looker-wrapper">
                     <iframe src="https://datastudio.google.com/embed/reporting/e1184f6e-8a87-4fda-9bcd-a2d9a1491307/page/page_12345" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-                </div>
-            </div>
-
-            <div id="bagian-aktivitas" class="container">
-                <h2>Aktivitas Kelompok</h2>
-                <p class="section-desc">Ruang untuk menampilkan aktivitas harian, mingguan, dan bulanan kelompok.</p>
-                <div class="action-buttons">
-                    <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('aktivitas-form')">
-                        <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
-                    </button>
-                </div>
-                <div id="aktivitas-form" class="form-container">
-                    <div class="form-box">
-                        <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Aktivitas Kelompok</h4>
-                        <div class="form-group">
-                            <label>Nama Aktivitas</label>
-                            <input type="text" placeholder="Masukkan judul/nama aktivitas">
-                        </div>
-                        <div class="form-group">
-                            <label>Tanggal Pelaksanaan</label>
-                            <input type="date">
-                        </div>
-                        <div class="form-group">
-                            <label>Lokasi Aktivitas</label>
-                            <input type="text" placeholder="Masukkan lokasi pelaksanaan">
-                        </div>
-                        <div class="form-group">
-                            <label>Deskripsi Singkat</label>
-                            <textarea placeholder="Jelaskan ringkasan aktivitas"></textarea>
-                        </div>
-                        <button type="button" class="btn-submit">Simpan Catatan Aktivitas</button>
-                    </div>
                 </div>
             </div>
 
@@ -554,14 +419,6 @@
             // Otomatis menutup sidebar setelah klik menu (khusus di layar HP)
             if (window.innerWidth <= 768) {
                 sidebar.classList.remove('open');
-            }
-        }
-
-        // Fungsi interaktif untuk membuka dan menutup kontainer formulir pengisian
-        function toggleForm(formId) {
-            const form = document.getElementById(formId);
-            if (form) {
-                form.classList.toggle('active');
             }
         }
     </script>
