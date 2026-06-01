@@ -978,76 +978,42 @@
   </div>
 </section>
 
-     <section id="notulen" class="section active">
-  <div class="card">
-    <h2 class="section-title">
-      <i class="fa-solid fa-file-signature" style="color: var(--primary); margin-right: 8px;"></i>Input Notulen Rapat Kelompok
-    </h2>
-    <p class="section-desc">Pencatatan berita acara dan hasil rumusan mufakat sidang kelompok secara langsung ke database cloud.</p>
-    
-    <div class="action-buttons">
-      <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('notulen-form')">
-        <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
-      </button>
-    </div>
-    
-    <div id="notulen-status-msg" style="margin-bottom: 15px; padding: 12px; border-radius: 6px; display: none; font-size: 14px; text-align: center; font-weight: 500;"></div>
+ <section id="notulen" class="section">
+        <div class="card">
+          <h2 class="section-title">Notulen Rapat Kelompok</h2>
+          <p class="section-desc">Ruang dokumentasi hasil rapat dan keputusan kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('notulen-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
 
-    <div id="notulen-form" class="form-container">
-      <div class="form-box">
-        <h4 style="margin-bottom:20px; font-size:16px; color:#2c3e50; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
-          Formulir Pengisian Notulen Rapat
-        </h4>
-        
-        <form id="notulenRapatForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Tanggal Rapat</label>
-              <input type="date" id="tanggalRapat" name="tanggalRapat" class="form-control" required>
+          <div id="notulen-form" class="form-container">
+            <div class="form-box">
+              <h4 style="margin-bottom:16px;font-size:16px;color:#2c3e50">Formulir Pengisian Notulen Rapat</h4>
+              <div class="form-group">
+                <label>Tanggal Rapat</label>
+                <input type="date">
+              </div>
+              <div class="form-group">
+                <label>Judul/Agenda Rapat</label>
+                <input type="text" placeholder="Masukkan judul rapat">
+              </div>
+              <div class="form-group">
+                <label>Peserta Rapat</label>
+                <input type="text" placeholder="Masukkan nama peserta">
+              </div>
+              <div class="form-group">
+                <label>Hasil Rapat / Keputusan</label>
+                <textarea placeholder="Masukkan hasil rapat atau keputusan"></textarea>
+              </div>
+              <button type="button" class="btn-submit">Simpan Notulen</button>
             </div>
-            <div class="form-group">
-              <label>Judul/Agenda Rapat</label>
-              <input type="text" id="judulRapat" name="judulRapat" class="form-control" placeholder="Masukkan judul rapat" required>
-            </div>
           </div>
+        </div>
+      </section>
 
-          <div class="form-group">
-            <label>Peserta Rapat</label>
-            <input type="text" id="pesertaRapat" name="pesertaRapat" class="form-control" placeholder="Masukkan nama peserta" required>
-          </div>
-
-          <div class="form-group">
-            <label>Hasil Rapat / Keputusan</label>
-            <textarea id="hasilRapat" name="hasilRapat" class="form-control" rows="4" placeholder="Masukkan hasil rapat atau keputusan" required></textarea>
-          </div>
-
-          <button type="submit" id="btnSubmitNotulen" class="btn-submit">
-            <i class="fa-solid fa-save"></i> Simpan Notulen
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top: 24px;">
-    <h2 class="section-title">
-      <i class="fa-solid fa-database" style="color: var(--primary); margin-right: 8px;"></i>
-      Database Live Google Sheets (Real-Time)
-    </h2>
-    <p class="section-desc" style="margin-bottom: 15px;">Data di bawah ini tersinkronisasi otomatis dari baris kolom Google Sheets cloud server.</p>
-    
-    <div style="position: relative; width: 100%; height: 500px; border: 1px solid #e5e7eb; border-radius: 14px; overflow: hidden; background: #fff;">
-      <iframe 
-        id="liveSheetsFrame"
-        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSRooDVs0qjc8Dv0O106SuSUbmmTJdgucJu9LZOhqeobvmPuhRMMMuSf5C7ByqJEZE-mBY2m1QIgNhI/pubhtml?gid=0&single=true" 
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
-        allowfullscreen>
-      </iframe>
-    </div>
-  </div>
-</section>
-
-      
       <section id="rencana-kegiatan" class="section">
         <div class="card">
           <h2 class="section-title">Rencana Kegiatan Kelompok</h2>
