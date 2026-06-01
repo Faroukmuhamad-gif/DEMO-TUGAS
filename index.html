@@ -992,55 +992,69 @@
             <i class="fa-solid fa-circle-exclamation"></i> <span>Gagal mengirim data. Silakan periksa koneksi internet Anda.</span>
           </div>
 
-          <form id="notulenRapatForm" class="notulen-portal-form">
-              <div class="notulen-form-group">
-                <label for="namaKelompok">Nama KUB Kelompok</label>
-                <select id="namaKelompok" name="namaKelompok" required>
-                  <option value="" disabled selected>-- Pilih KUB --</option>
-                  <option value="KUB Sumber Makmur">KUB Sumber Makmur</option>
-                  <option value="KUB Angsa Laut">KUB Angsa Laut</option>
-                  <option value="KUB Intimung Taka">KUB Intimung Taka</option>
-                  <option value="KUB Usaha Nelayan">KUB Usaha Nelayan</option>
-                </select>
-              </div>
+          <section id="notulen" class="section">
+        <div class="card">
+          <h2 class="section-title">Notulen Rapat Kelompok</h2>
+          <p class="section-desc">Ruang dokumentasi hasil rapat dan keputusan kelompok.</p>
+          
+          <div class="action-buttons">
+            <button class="btn-fill btn-fill-form" type="button" onclick="toggleForm('notulen-form')">
+              <i class="fa-solid fa-pen-to-square"></i> Akses Layanan
+            </button>
+          </div>
 
-              <div class="notulen-form-group">
-                <label for="tanggalRapat">Tanggal Pelaksanaan Rapat</label>
-                <input type="date" id="tanggalRapat" name="tanggalRapat" required />
-              </div>
+          <section id="notulen" class="section active">
+        <div class="card">
+          <h2 class="section-title">
+            <i class="fa-solid fa-file-signature" style="color: var(--primary); margin-right: 8px;"></i>Input Notulen Rapat Kelompok
+          </h2>
+          <p class="section-desc">Pencatatan berita acara dan hasil rumusan mufakat sidang kelompok secara langsung ke database cloud.</p>
+          
+          <div id="notulenAlertSuccess" class="notulen-alert notulen-alert-success" style="display: none;">
+            <i class="fa-solid fa-circle-check"></i> <span>Data notulen rapat berhasil disinkronisasikan ke Google Sheets!</span>
+          </div>
+          <div id="notulenAlertError" class="notulen-alert notulen-alert-error" style="display: none;">
+            <i class="fa-solid fa-circle-exclamation"></i> <span>Gagal mengirim data. Silakan periksa koneksi internet Anda.</span>
+          </div>
 
-              <div class="notulen-form-group">
-                <label for="namaKegiatan">Agenda / Nama Kegiatan</label>
-                <input type="text" id="namaKegiatan" name="namaKegiatan" placeholder="Contoh: Rapat Evaluasi Bulanan Kas" required />
-              </div>
+          <div id="notulen-form" class="form-container active">
+            <div class="form-box" style="padding-top: 10px;">
+              <h4 style="margin-bottom:20px; font-size:16px; color:#2c3e50; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
+                Formulir Pengisian Notulen Rapat
+              </h4>
+              
+              <form id="notulenRapatForm" class="notulen-portal-form">
+                
+                <div class="form-group notulen-form-group">
+                  <label for="tanggalRapat">Tanggal Rapat</label>
+                  <input type="date" id="tanggalRapat" name="tanggalRapat" class="form-control" required />
+                </div>
 
-              <div class="notulen-form-group">
-                <label for="namaPembicara">Nama Pembicara Utama</label>
-                <input type="text" id="namaPembicara" name="namaPembicara" placeholder="Masukkan nama pemateri" required />
-              </div>
+                <div class="form-group notulen-form-group">
+                  <label for="judulRapat">Judul/Agenda Rapat</label>
+                  <input type="text" id="judulRapat" name="judulRapat" class="form-control" placeholder="Masukkan judul rapat" required />
+                </div>
 
-              <div class="notulen-form-group">
-                <label for="jabatanPembicara">Jabatan Pembicara</label>
-                <input type="text" id="jabatanPembicara" name="jabatanPembicara" placeholder="Contoh: Ketua Kelompok / Penyuluh Perikanan" required />
-              </div>
+                <div class="form-group notulen-form-group">
+                  <label for="pesertaRapat">Peserta Rapat</label>
+                  <input type="text" id="pesertaRapat" name="pesertaRapat" class="form-control" placeholder="Masukkan nama peserta" required />
+                </div>
 
-              <div class="notulen-form-group">
-                <label for="pokokMateri">Pokok Materi Pembahasan</label>
-                <input type="text" id="pokokMateri" name="pokokMateri" placeholder="Topik bahasan utama sidang rapat" required />
-              </div>
+                <div class="form-group notulen-form-group full-width" style="grid-column: 1 / -1;">
+                  <label for="hasilRapat">Hasil Rapat / Keputusan</label>
+                  <textarea id="hasilRapat" name="hasilRapat" class="form-control" rows="4" placeholder="Masukkan hasil rapat atau keputusan" required></textarea>
+                </div>
 
-              <div class="notulen-form-group full-width">
-                <label for="kesimpulan">Hasil Kesimpulan / Mufakat</label>
-                <textarea id="kesimpulan" name="kesimpulan" rows="3" placeholder="Tuliskan keputusan atau rumusan hasil mufakat bersama..." required></textarea>
-              </div>
+                <button type="submit" id="btnSubmitNotulen" class="btn-submit notulen-btn-submit" style="margin-top: 10px;">
+                  <i class="fa-solid fa-cloud-arrow-up" style="margin-right: 5px;"></i> <span id="btnTextNotulen">Simpan Notulen</span>
+                </button>
+              </form>
 
-              <button type="submit" id="btnSubmitNotulen" class="notulen-btn-submit">
-                <i class="fa-solid fa-cloud-arrow-up"></i> <span id="btnTextNotulen">Kirim & Sinkronisasikan Data Rapat</span>
-              </button>
-          </form>
+            </div>
+          </div>
         </div>
 
-        <div class="card" style="padding: 14px;">
+        <div class="card" style="padding: 14px; margin-top: 24px;">
           <h2 class="section-title">
             <i class="fa-solid fa-database" style="color: var(--primary); margin-right: 8px;"></i>
             Database Live Google Sheets (Real-Time)
@@ -1057,6 +1071,8 @@
           </div>
         </div>
       </section>
+
+      
       <section id="rencana-kegiatan" class="section">
         <div class="card">
           <h2 class="section-title">Rencana Kegiatan Kelompok</h2>
