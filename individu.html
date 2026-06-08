@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daftar Pengumpulan Tugas - SIM Perikanan</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #f4f7f6;
+      --card: #ffffff;
+      --primary: #1abc9c;
+      --primary-dark: #16a085;
+      --text-dark: #2c3e50;
+      --text-muted: #7f8c8d;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: 
+        radial-gradient(circle at top left, rgba(26,188,156,0.1), transparent 35%),
+        var(--bg);
+      color: var(--text-dark);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header Styling */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    header .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--text-dark);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Grid Layout */
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* Card Styling */
+    .student-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .student-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .student-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(26, 188, 156, 0.15);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .avatar-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(26, 188, 156, 0.1);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .info h3 {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Button Navigation */
+    .btn-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.25s ease;
+    }
+
+    .btn-link:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-link i {
+      font-size: 12px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 10px;
+      }
+      header h1 {
+        font-size: 22px;
+      }
+      .student-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Daftar Pengumpulan Tugas</h1>
+      <p>Ruang integrasi berkas mahasiswa dan tautan navigasi proyek kelompok.</p>
+      <span class="badge">SISTEM INFORMASI MANAJEMEN PERIKANAN</span>
+    </header>
+
+    <div class="student-grid">
+      
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Muhammad Farouk</h3>
+            <p>NIM. 2310715110001</p>
+          </div>
+        </div>
+        <a href="https://faroukmuhamad-gif.github.io/MUHAMMAD-FAROUK-231071510001-html/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Muhammad Faris Saputra</h3>
+            <p>NIM. 2310715110006</p>
+          </div>
+        </div>
+        <a href="https://2310715110006-collab.github.io/Tugas_Muhammad-Faris-Saputra/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Ahmad Fadhil Azhim</h3>
+            <p>NIM. 2310715110010</p>
+          </div>
+        </div>
+        <a href="https://github.com/azhimm/tugas-github.git" target="_blank" class="btn-link">
+          Buka Repositori <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Dhiska Asaning Tyas</h3>
+            <p>NIM. 2310715120007</p>
+          </div>
+        </div>
+        <a href="https://dhiskaasaningtyas.github.io/Dhiska-Asaning-Tyas/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Sintiya Nurlaila</h3>
+            <p>NIM. 2310715120002</p>
+          </div>
+        </div>
+        <a href="https://sintianorlaila-stack.github.io/Sintiya-Nurlaila/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Novia</h3>
+            <p>NIM. 2310715120004</p>
+          </div>
+        </div>
+        <a href="https://novianovi.github.io/Novia/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Norhayani</h3>
+            <p>NIM. 2310715120003</p>
+          </div>
+        </div>
+        <a href="https://norhayani.github.io/Norhayani-2310715120003-html/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Frans Siskus Lo han Long</h3>
+            <p>NIM. 2310715110005</p>
+          </div>
+        </div>
+        <a href="https://fransurbae.github.io/Frans-Siskus-Lo-Han-Long/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Muhamad Roofi Fuadi</h3>
+            <p>NIM. 2310715110009</p>
+          </div>
+        </div>
+        <a href="https://muhamadroofifuadi.github.io/Muhamad-Roofi-Fuadi/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+      <div class="student-card">
+        <div class="card-top">
+          <div class="avatar-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="info">
+            <h3>Jastin Imani</h3>
+            <p>NIM. 2310715110008</p>
+          </div>
+        </div>
+        <a href="https://jastinimani05122004-prog.github.io/Jastin-Imani/" target="_blank" class="btn-link">
+          Buka Tugas <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
