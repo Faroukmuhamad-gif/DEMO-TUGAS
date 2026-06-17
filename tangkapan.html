@@ -303,6 +303,7 @@
       .sidebar.open{transform:translateX(0)}
 
       .main,
+      .main,
       .sidebar.open ~ .main,
       .sidebar:hover ~ .main{
         margin-left:0;
@@ -362,7 +363,7 @@
           <p>Form pengisian, form penilaian, spreadsheet data, dan dashboard Looker Studio.</p>
         </div>
         <div class="top-actions">
-          <a class="pill" href="index.html">
+          <a class="pill" href="https://fransurbae.github.io/Portal-KUB/">
             <i class="fa-solid fa-house"></i> Kembali ke Beranda
           </a>
           <button class="pill primary" onclick="showForm('pengisian')">
@@ -375,13 +376,14 @@
       </div>
 
       <div class="stack">
+        <!-- Form Pengisian Container -->
         <div id="formPengisian" class="form-container">
           <div class="card">
             <h2 class="section-title">Form Pengisian Hasil Tangkapan</h2>
             <p class="section-desc">
               Isi form berikut dengan data hasil tangkapan kelompok Anda. Form dapat diakses dengan akun Google apa saja.
             </p>
-             
+            
             <div class="iframe-box">
               <iframe
                 src="https://docs.google.com/forms/d/e/1FAIpQLScknvtP9eHayjmDEoTzU93PBTHAesfS5M4Ae_in0jt0obWBxw/viewform?usp=dialog"
@@ -400,6 +402,7 @@
             </div>
           </div>
 
+          <!-- Spreadsheet Pengisian -->
           <div class="card">
             <h2 class="section-title">Spreadsheet Hasil Form Pengisian</h2>
             <p class="section-desc">
@@ -414,6 +417,7 @@
             </div>
           </div>
 
+          <!-- Looker Studio Pengisian -->
           <div class="card">
             <h2 class="section-title">Dashboard Looker Studio - Form Pengisian</h2>
             <p class="section-desc">
@@ -429,13 +433,14 @@
           </div>
         </div>
 
+        <!-- Form Penilaian Container -->
         <div id="formPenilaian" class="form-container">
           <div class="card">
             <h2 class="section-title">Form Penilaian Hasil Tangkapan</h2>
             <p class="section-desc">
               Isi form berikut untuk penilaian hasil tangkapan kelompok. Form dapat diakses dengan akun Google apa saja.
             </p>
-             
+            
             <div class="iframe-box">
               <iframe
                 src="https://docs.google.com/forms/d/e/1FAIpQLScZzLRtfK3fIkpcFp5jZD0Cs8HIzr7WxB69xmRA2AFO_ZmqTg/viewform?usp=dialog"
@@ -454,6 +459,7 @@
             </div>
           </div>
 
+          <!-- Spreadsheet Penilaian -->
           <div class="card">
             <h2 class="section-title">Spreadsheet Hasil Form Penilaian</h2>
             <p class="section-desc">
@@ -466,7 +472,8 @@
                 loading="lazy">
               </iframe>
             </div>
-             
+            
+            <!-- ⬇️ UBAH NAMA FILE DI SINI ⬇️ -->
             <a 
               class="download-btn" 
               href="AnalisisKepuasanSistem.xlsx"
@@ -474,11 +481,14 @@
               <i class="fa-solid fa-file-excel"></i>
               Download File XLSX
             </a>
+            <!-- ⬆️ UBAH NAMA FILE DI SINI ⬆️ -->
+            
             <div class="note" style="margin-top:12px;">
               <strong>Catatan:</strong> Klik tombol di atas untuk mengunduh template/file penilaian dalam format Excel (.xlsx). Pastikan file <code>file-penilaian.xlsx</code> sudah berada di folder yang sama dengan file HTML ini.
             </div>
           </div>
 
+          <!-- Looker Studio Penilaian -->
           <div class="card">
             <h2 class="section-title">Dashboard Looker Studio - Form Penilaian</h2>
             <p class="section-desc">
