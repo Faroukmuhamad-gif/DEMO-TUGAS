@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tugas Individu 5 - Data Rencana Usaha Kelompok</title>
+  <title>Tugas Individu 5 - Data Rencana Usaha</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -33,12 +33,6 @@
       top: 0;
       padding: 24px 18px;
       overflow-y: auto;
-      transition: width 0.3s ease;
-    }
-
-    .sidebar.collapsed {
-      width: 72px;
-      padding: 24px 10px;
     }
 
     .brand {
@@ -47,11 +41,6 @@
       border-radius: 14px;
       margin-bottom: 24px;
       text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar.collapsed .brand {
-      padding: 14px 8px;
     }
 
     .brand h2 {
@@ -72,7 +61,6 @@
       color: #64748b;
       margin: 18px 0 10px;
       font-weight: 700;
-      transition: opacity 0.3s ease;
     }
 
     .nav {
@@ -92,8 +80,6 @@
       transition: .3s;
       border-left: 4px solid transparent;
       font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
     }
 
     .nav a:hover,
@@ -103,29 +89,10 @@
       border-left-color: #38bdf8;
     }
 
-    .sidebar.collapsed .nav a {
-      text-align: center;
-      padding: 12px 8px;
-      font-size: 18px;
-      border-left: 0;
-    }
-
-    .sidebar.collapsed .brand p,
-    .sidebar.collapsed .menu-title,
-    .sidebar.collapsed .nav a .text {
-      display: none;
-    }
-
     .content {
       margin-left: 260px;
       width: calc(100% - 260px);
       padding: 28px;
-      transition: margin-left 0.3s ease, width 0.3s ease;
-    }
-
-    .content.collapsed {
-      margin-left: 72px;
-      width: calc(100% - 72px);
     }
 
     .header {
@@ -138,7 +105,6 @@
       align-items: center;
       margin-bottom: 24px;
       box-shadow: 0 8px 20px rgba(2, 132, 199, 0.18);
-      gap: 14px;
     }
 
     .header h1 {
@@ -149,26 +115,6 @@
     .header p {
       font-size: 13px;
       color: #e0f2fe;
-    }
-
-    .toggle-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 10px;
-      background: #0f172a;
-      color: white;
-      cursor: pointer;
-      font-size: 18px;
-      flex-shrink: 0;
-      transition: .3s;
-    }
-
-    .toggle-btn:hover {
-      background: #1e293b;
     }
 
     .btn {
@@ -229,12 +175,7 @@
         height: auto;
       }
 
-      .sidebar.collapsed {
-        width: 100%;
-      }
-
-      .content,
-      .content.collapsed {
+      .content {
         margin-left: 0;
         width: 100%;
       }
@@ -244,51 +185,34 @@
         align-items: flex-start;
         gap: 14px;
       }
-
-      .sidebar.collapsed .brand p,
-      .sidebar.collapsed .menu-title,
-      .sidebar.collapsed .nav a .text {
-        display: inline;
-      }
-
-      .sidebar.collapsed .nav a {
-        text-align: left;
-        padding: 12px 14px;
-        font-size: 14px;
-        border-left: 4px solid transparent;
-      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar">
       <div class="brand">
         <h2>Tugas Individu 5</h2>
-        <p>Data Rencana Usaha Kelompok</p>
+        <p>Data Rencana Usaha</p>
       </div>
 
       <div class="menu-title">Navigasi</div>
       <ul class="nav">
-        <li><a href="index.html" style="background: #020617; color: #38bdf8;">🌐 <span class="text">Beranda Utama</span></a></li>
-        <hr style="border-color: #1e293b; margin: 8px 0;">
-        
-        <li><a href="#beranda" class="active">🏠 <span class="text">Beranda Halaman</span></a></li>
-        <li><a href="#form-data">📝 <span class="text">Form Data</span></a></li>
-        <li><a href="#tabel-data">📊 <span class="text">Tabel Data</span></a></li>
-        <li><a href="#kepuasan">📋 <span class="text">Kepuasan</span></a></li>
-        <li><a href="#dashboard">📈 <span class="text">Dashboard</span></a></li>
+        <li><a href="#beranda" class="active">🏠 Beranda</a></li>
+        <li><a href="#form-data">📝 Form Data</a></li>
+        <li><a href="#tabel-data">📊 Tabel Data</a></li>
+        <li><a href="#kepuasan">📋 Kepuasan</a></li>
+        <li><a href="#dashboard">📈 Dashboard</a></li>
       </ul>
     </aside>
 
-    <main class="content" id="content">
+    <main class="content">
       <div class="header" id="beranda">
-        <button class="toggle-btn" id="toggleSidebar">☰</button>
-        <div style="flex:1;">
+        <div>
           <h1>Data Rencana Usaha Kelompok</h1>
           <p>Halaman ini menampilkan form input, data spreadsheet, form kepuasan, dan dashboard.</p>
         </div>
-        <a href="index.html" class="btn" style="background: #0f172a;">🔙 Kembali ke Beranda</a>
+        <a href="#form-data" class="btn">Isi Form</a>
       </div>
 
       <section class="section" id="form-data">
@@ -340,16 +264,5 @@
       </section>
     </main>
   </div>
-
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const content = document.getElementById('content');
-    const toggleSidebar = document.getElementById('toggleSidebar');
-
-    toggleSidebar.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      content.classList.toggle('collapsed');
-    });
-  </script>
 </body>
 </html>
