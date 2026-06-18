@@ -165,71 +165,73 @@
 
     <!-- NAVBAR ATAS -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-gov fixed-top shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-shield-check me-2 fs-4 text-warning"></i>
+                <strong>PORTAL Rencana Usaha Bersama</strong>
+            </a>
+            <span class="navbar-text text-white-50 d-none d-md-block">
+                Sistem Informasi dan Evaluasi Data 
+            </span>
+        </div>
+    </nav>
+
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
-            <i class="bi bi-shield-check me-2 fs-4 text-warning"></i>
-            <strong>PORTAL Rencana Usaha Bersama</strong>
-        </a>
-        <span class="navbar-text text-white-50 d-none d-md-block">
-            Sistem Informasi dan Evaluasi Data 
-        </span>
-    </div>
-</nav>
+        <div class="row">
             
             <!-- SIDEBAR NAVIGASI -->
-           <nav class="sidebar col-md-3 col-lg-2 d-md-block collapse">
-    <div class="position-sticky pt-2">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link text-primary fw-bold" href="index.html">
-                    <i class="bi bi-house-door-fill me-2"></i> Beranda Utama
-                </a>
-            </li>
-            <hr class="my-2 mx-3"> <li class="nav-item">
-                <a class="nav-link active" href="#latar-belakang">
-                    <i class="bi bi-info-circle me-2"></i> Latar Belakang Rencana Usaha Bersama
-                </a>
-            </li>
-            
-            <h6 class="sidebar-heading">Rencana Usaha Bersama</h6>
-            <li class="nav-item">
-                <a class="nav-link" href="#kuesioner-rub">
-                    <i class="bi bi-file-earmark-text me-2"></i> Kuesioner
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#spreadsheet-rub">
-                    <i class="bi bi-table me-2"></i> Spreadsheet Data
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#datastudio-rub">
-                    <i class="bi bi-bar-chart-line me-2"></i> Looker Studio
-                </a>
-            </li>
+            <nav class="sidebar col-md-3 col-lg-2 d-md-block collapse">
+                <div class="position-sticky pt-2">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#latar-belakang">
+                                <i class="bi bi-info-circle me-2"></i> Latar Belakang Rencana Usaha Bersama
+                            </a>
+                        </li>
+                        
+                        <!-- Kategori 1: Rencana Usaha Bersama -->
+                        <h6 class="sidebar-heading">Rencana Usaha Bersama</h6>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#kuesioner-rub">
+                                <i class="bi bi-file-earmark-text me-2"></i> Kuesioner
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#spreadsheet-rub">
+                                <i class="bi bi-table me-2"></i> Spreadsheet Data
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#datastudio-rub">
+                                <i class="bi bi-bar-chart-line me-2"></i> Looker Studio
+                            </a>
+                        </li>
 
-            <h6 class="sidebar-heading">Tingkat Kepuasan</h6>
-            <li class="nav-item">
-                <a class="nav-link" href="#kuesioner-kepuasan">
-                    <i class="bi bi-file-earmark-text me-2"></i> Kuesioner Tingkat Kepuasan
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#spreadsheet-kepuasan">
-                    <i class="bi bi-table me-2"></i> Spreadsheet Tingkat Kepuasan
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#datastudio-kepuasan">
-                    <i class="bi bi-bar-chart-line me-2"></i> Looker Studio Tingkat Kepuasan
-                </a>
-            </li>
-        </ul>
-        <hr class="mx-3">
-        <div class="px-3 text-muted small">
-        </div>
-    </div>
-</nav>
+                        <!-- Kategori 2: Tingkat Kepuasan -->
+                        <h6 class="sidebar-heading">Tingkat Kepuasan</h6>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#kuesioner-kepuasan">
+                                <i class="bi bi-file-earmark-text me-2"></i> Kuesioner Tingkat Kepuasan
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#spreadsheet-kepuasan">
+                                <i class="bi bi-table me-2"></i> Spreadsheet Tingkat Kepuasan
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#datastudio-kepuasan">
+                                <i class="bi bi-bar-chart-line me-2"></i> Looker Studio Tingkat Kepuasan
+                            </a>
+                        </li>
+                    </ul>
+                    <hr class="mx-3">
+                    <div class="px-3 text-muted small">
+            
+                    </div>
+                </div>
+            </nav>
+
             <!-- KONTEN UTAMA -->
             <main class="main-content col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 
@@ -355,7 +357,7 @@
                         <div class="card-body p-0">
                             <div class="embed-container">
                                 <!-- ISI LINK GOOGLE FORM KUESIONER RUB DI SINI -->
-                                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeBggyT9pfH1WQcfM8lbKVpq42dwad4m5bGoD5HYwpXV0UqWg/viewform?usp=header" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
+                                <iframe src="https://forms.gle/ag3wH2whvi2oUe7K9" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
                             </div>
                         </div>
                     </div>
@@ -370,7 +372,7 @@
                         <div class="card-body p-0">
                             <div class="embed-container">
                                 <!-- ISI LINK GOOGLE SHEETS RUB DI SINI -->
-                                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTGnNGAJnUdvRTO03lfyqXvzkORWJnIf5uRsiRORY-RviIk_HqffEEHJQE3tizUw1Q7iIw8sqPCCTM7/pubhtml" width="100%" height="500" frameborder="0"></iframe>
+                                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSVTJWWc0zmcXKWIHX0HItb1CYq9LHxASwzhdfb61EojP8zOLpWQJQcmyXPp4CExKDinjroPM_ohHPX/pubhtml" width="100%" height="500" frameborder="0"></iframe>
                             </div>
                         </div>
                     </div>
@@ -385,7 +387,7 @@
                         <div class="card-body p-0">
                             <div class="embed-container">
                                 <!-- ISI LINK EMBED LOOKER STUDIO RUB DI SINI -->
-                                <iframe src="https://datastudio.google.com/embed/reporting/5451edc9-86dd-41f1-9926-5570b459e1a0/page/page_12345" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                <iframe src="https://datastudio.google.com/embed/reporting/57fe1a9c-0067-4694-b7be-c962f1563cf9/page/page_12345" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
