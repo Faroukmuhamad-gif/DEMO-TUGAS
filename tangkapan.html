@@ -10,328 +10,368 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    :root{
-      --bg:#f4f7f6;
-      --card:#ffffff;
-      --primary:#1abc9c;
-      --primary-dark:#16a085;
-      --sidebar:#2c3e50;
-      --sidebar-dark:#1a252f;
-      --text:#2d3436;
-      --muted:#636e72;
-      --line:#e9edf2;
-      --shadow:0 10px 30px rgba(0,0,0,.08);
-      --radius:18px;
-      --sidebar-w:260px;
-      --sidebar-c:76px;
-    }
+  :root{
+    --bg:#f4f7f6;
+    --card:#ffffff;
+    --primary:#1abc9c;
+    --primary-dark:#16a085;
+    --sidebar:#2c3e50;
+    --sidebar-dark:#1a252f;
+    --text:#2d3436;
+    --muted:#636e72;
+    --line:#e9edf2;
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+    --radius:18px;
+    --sidebar-w:260px;
+    --sidebar-c:76px;
+  }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:'Poppins',sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(26,188,156,.10), transparent 30%),
-        radial-gradient(circle at right top, rgba(52,152,219,.09), transparent 26%),
-        var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
-    }
 
-    .layout{display:flex;min-height:100vh}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins',sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(26,188,156,.10), transparent 30%),
+      radial-gradient(circle at right top, rgba(52,152,219,.09), transparent 26%),
+      var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
 
-    .mobile-toggle{
-      display:none;
-      position:fixed;
-      top:12px;
-      left:12px;
-      z-index:60;
-      width:46px;
-      height:46px;
-      border:none;
-      border-radius:14px;
-      background:var(--sidebar-dark);
-      color:#fff;
-      box-shadow:var(--shadow);
-      cursor:pointer;
-      align-items:center;
-      justify-content:center;
-    }
+
+  .layout{display:flex;min-height:100vh}
+
+
+  .mobile-toggle{
+    display:none;
+    position:fixed;
+    top:12px;
+    left:12px;
+    z-index:60;
+    width:46px;
+    height:46px;
+    border:none;
+    border-radius:14px;
+    background:var(--sidebar-dark);
+    color:#fff;
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    align-items:center;
+    justify-content:center;
+  }
+
+
+  .sidebar{
+    width:var(--sidebar-c);
+    background:linear-gradient(180deg, var(--sidebar) 0%, #233140 100%);
+    color:#ecf0f1;
+    position:fixed;
+    inset:0 auto 0 0;
+    z-index:50;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    transition:transform .3s ease, width .3s ease;
+  }
+
+
+  .sidebar.open,
+  .sidebar:hover{width:var(--sidebar-w)}
+
+
+  .brand{
+    height:76px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:0 18px;
+    background:var(--sidebar-dark);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    white-space:nowrap;
+  }
+
+
+  .brand i{color:var(--primary);font-size:24px;min-width:28px;text-align:center}
+  .brand h2{
+    font-size:16px;
+    font-weight:700;
+    opacity:0;
+    transition:.25s ease;
+  }
+  .sidebar.open .brand h2,
+  .sidebar:hover .brand h2{opacity:1}
+
+
+  .sidebar-menu{list-style:none;padding:12px 0}
+  .menu-item{margin:6px 10px}
+
+
+  .menu-toggle{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px;
+    border:none;
+    background:transparent;
+    color:#cbd5e1;
+    cursor:pointer;
+    border-radius:14px;
+    transition:.25s ease;
+    font:inherit;
+    text-align:left;
+  }
+
+
+  .menu-toggle i{width:28px;text-align:center;font-size:18px}
+  .menu-label{opacity:0;transition:.25s ease;white-space:nowrap;font-size:14px;font-weight:500}
+  .sidebar.open .menu-label,
+  .sidebar:hover .menu-label{opacity:1}
+  .menu-toggle:hover,
+  .menu-toggle.active{background:rgba(255,255,255,.08);color:#fff}
+
+
+  .main{
+    margin-left:var(--sidebar-c);
+    width:calc(100% - var(--sidebar-c));
+    padding:20px;
+    transition:margin-left .3s ease,width .3s ease;
+  }
+
+
+  .sidebar.open ~ .main,
+  .sidebar:hover ~ .main{
+    margin-left:var(--sidebar-w);
+    width:calc(100% - var(--sidebar-w));
+  }
+
+
+  .topbar{
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.7);
+    box-shadow:var(--shadow);
+    border-radius:22px;
+    padding:18px 20px;
+    margin-bottom:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+
+
+  .topbar h1{font-size:22px;color:#1f2d3d;margin-bottom:4px}
+  .topbar p{color:var(--muted);font-size:13px}
+  .top-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    border-radius:999px;
+    background:#fff;
+    color:#34495e;
+    border:1px solid var(--line);
+    font-size:13px;
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+    text-decoration:none;
+    cursor:pointer;
+    transition:.25s ease;
+  }
+
+
+  .pill:hover{transform:translateY(-2px)}
+
+
+  .pill.primary{
+    background:var(--primary);
+    color:#fff;
+    border-color:transparent;
+  }
+
+
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid rgba(255,255,255,.6);
+    padding:20px;
+    margin-bottom:18px;
+  }
+
+
+  .section-title{font-size:20px;margin-bottom:12px;color:#213547}
+  .section-desc{color:var(--muted);margin-bottom:16px;line-height:1.7;font-size:14px}
+
+
+  .stack{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    margin-bottom:18px;
+  }
+
+
+  .iframe-box{
+    width:100%;
+    border:1px solid #e9edf2;
+    border-radius:16px;
+    overflow:hidden;
+    background:#fff;
+    position:relative;
+  }
+
+
+  .iframe-box iframe{
+    width:100%;
+    height:620px;
+    border:0;
+    display:block;
+  }
+
+
+  .form-alt-link {
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 12px;
+    font-size: 13px;
+    color: #f57c00;
+    line-height: 1.6;
+  }
+
+
+  .form-alt-link a {
+    color: #e65100;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+
+  .form-alt-link a:hover {
+    text-decoration: underline;
+  }
+
+
+  .note{
+    margin-top:14px;
+    padding:14px 16px;
+    border-radius:14px;
+    background:#f8fbfc;
+    border:1px solid var(--line);
+    color:var(--muted);
+    line-height:1.7;
+    font-size:13px;
+  }
+
+
+  .link-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+  }
+
+
+  .form-container{
+    display:none;
+    animation:fadeIn .3s ease;
+  }
+
+
+  .form-container.active{
+    display:block;
+  }
+
+
+  .download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 18px;
+    border-radius:12px;
+    background:#27ae60;
+    color:#fff;
+    border:none;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+    text-decoration:none;
+    box-shadow:0 4px 14px rgba(39,174,96,.3);
+    transition:.25s ease;
+    margin-top:14px;
+  }
+
+
+  .download-btn:hover{
+    background:#219a52;
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(39,174,96,.4);
+  }
+
+
+  .download-btn i{
+    font-size:16px;
+  }
+
+
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+
+  @media (max-width: 768px){
+    .mobile-toggle{display:flex}
+
 
     .sidebar{
-      width:var(--sidebar-c);
-      background:linear-gradient(180deg, var(--sidebar) 0%, #233140 100%);
-      color:#ecf0f1;
-      position:fixed;
-      inset:0 auto 0 0;
-      z-index:50;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      transition:transform .3s ease, width .3s ease;
+      transform:translateX(-100%);
+      width:var(--sidebar-w);
     }
 
-    .sidebar.open,
-    .sidebar:hover{width:var(--sidebar-w)}
 
-    .brand{
-      height:76px;
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:0 18px;
-      background:var(--sidebar-dark);
-      border-bottom:1px solid rgba(255,255,255,.08);
-      white-space:nowrap;
-    }
+    .sidebar.open{transform:translateX(0)}
 
-    .brand i{color:var(--primary);font-size:24px;min-width:28px;text-align:center}
-    .brand h2{
-      font-size:16px;
-      font-weight:700;
-      opacity:0;
-      transition:.25s ease;
-    }
-    .sidebar.open .brand h2,
-    .sidebar:hover .brand h2{opacity:1}
 
-    .sidebar-menu{list-style:none;padding:12px 0}
-    .menu-item{margin:6px 10px}
-
-    .menu-toggle{
-      width:100%;
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:14px;
-      border:none;
-      background:transparent;
-      color:#cbd5e1;
-      cursor:pointer;
-      border-radius:14px;
-      transition:.25s ease;
-      font:inherit;
-      text-align:left;
-    }
-
-    .menu-toggle i{width:28px;text-align:center;font-size:18px}
-    .menu-label{opacity:0;transition:.25s ease;white-space:nowrap;font-size:14px;font-weight:500}
-    .sidebar.open .menu-label,
-    .sidebar:hover .menu-label{opacity:1}
-    .menu-toggle:hover,
-    .menu-toggle.active{background:rgba(255,255,255,.08);color:#fff}
-
-    .main{
-      margin-left:var(--sidebar-c);
-      width:calc(100% - var(--sidebar-c));
-      padding:20px;
-      transition:margin-left .3s ease,width .3s ease;
-    }
-
+    .main,
+    .main,
     .sidebar.open ~ .main,
     .sidebar:hover ~ .main{
-      margin-left:var(--sidebar-w);
-      width:calc(100% - var(--sidebar-w));
+      margin-left:0;
+      width:100%;
+      padding:70px 14px 14px;
     }
+
 
     .topbar{
-      background:rgba(255,255,255,.72);
-      backdrop-filter:blur(10px);
-      border:1px solid rgba(255,255,255,.7);
-      box-shadow:var(--shadow);
-      border-radius:22px;
-      padding:18px 20px;
-      margin-bottom:18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-
-    .topbar h1{font-size:22px;color:#1f2d3d;margin-bottom:4px}
-    .topbar p{color:var(--muted);font-size:13px}
-    .top-actions{display:flex;gap:10px;flex-wrap:wrap}
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      background:#fff;
-      color:#34495e;
-      border:1px solid var(--line);
-      font-size:13px;
-      box-shadow:0 4px 14px rgba(0,0,0,.04);
-      text-decoration:none;
-      cursor:pointer;
-      transition:.25s ease;
-    }
-
-    .pill:hover{transform:translateY(-2px)}
-
-    .pill.primary{
-      background:var(--primary);
-      color:#fff;
-      border-color:transparent;
-    }
-
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,.6);
-      padding:20px;
-      margin-bottom:18px;
-    }
-
-    .section-title{font-size:20px;margin-bottom:12px;color:#213547}
-    .section-desc{color:var(--muted);margin-bottom:16px;line-height:1.7;font-size:14px}
-
-    .stack{
-      display:flex;
       flex-direction:column;
-      gap:18px;
-      margin-bottom:18px;
+      align-items:flex-start;
     }
 
-    .iframe-box{
-      width:100%;
-      border:1px solid #e9edf2;
-      border-radius:16px;
-      overflow:hidden;
-      background:#fff;
-      position:relative;
-    }
 
-    .iframe-box iframe{
-      width:100%;
-      height:620px;
-      border:0;
-      display:block;
-    }
+    .top-actions{justify-content:flex-start}
+    .card{padding:16px}
+    .section-title{font-size:18px}
+    .iframe-box iframe{height:500px}
+    .pill{width:100%;justify-content:center}
+    .form-alt-link{font-size:12px}
+    .download-btn{width:100%;justify-content:center}
+  }
 
-    .form-alt-link {
-      margin-top: 12px;
-      padding: 12px 14px;
-      background: #fff8e1;
-      border: 1px solid #ffe082;
-      border-radius: 12px;
-      font-size: 13px;
-      color: #f57c00;
-      line-height: 1.6;
-    }
 
-    .form-alt-link a {
-      color: #e65100;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .form-alt-link a:hover {
-      text-decoration: underline;
-    }
-
-    .note{
-      margin-top:14px;
-      padding:14px 16px;
-      border-radius:14px;
-      background:#f8fbfc;
-      border:1px solid var(--line);
-      color:var(--muted);
-      line-height:1.7;
-      font-size:13px;
-    }
-
-    .link-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:10px;
-    }
-
-    .form-container{
-      display:none;
-      animation:fadeIn .3s ease;
-    }
-
-    .form-container.active{
-      display:block;
-    }
-
-    .download-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 18px;
-      border-radius:12px;
-      background:#27ae60;
-      color:#fff;
-      border:none;
-      font-size:14px;
-      font-weight:500;
-      cursor:pointer;
-      text-decoration:none;
-      box-shadow:0 4px 14px rgba(39,174,96,.3);
-      transition:.25s ease;
-      margin-top:14px;
-    }
-
-    .download-btn:hover{
-      background:#219a52;
-      transform:translateY(-2px);
-      box-shadow:0 6px 20px rgba(39,174,96,.4);
-    }
-
-    .download-btn i{
-      font-size:16px;
-    }
-
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(10px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    @media (max-width: 768px){
-      .mobile-toggle{display:flex}
-
-      .sidebar{
-        transform:translateX(-100%);
-        width:var(--sidebar-w);
-      }
-
-      .sidebar.open{transform:translateX(0)}
-
-      .main,
-      .main,
-      .sidebar.open ~ .main,
-      .sidebar:hover ~ .main{
-        margin-left:0;
-        width:100%;
-        padding:70px 14px 14px;
-      }
-
-      .topbar{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-
-      .top-actions{justify-content:flex-start}
-      .card{padding:16px}
-      .section-title{font-size:18px}
-      .iframe-box iframe{height:500px}
-      .pill{width:100%;justify-content:center}
-      .form-alt-link{font-size:12px}
-      .download-btn{width:100%;justify-content:center}
-    }
-
-    @media (max-width: 480px){
-      .topbar h1{font-size:18px}
-      .iframe-box iframe{height:450px}
-      .topbar{padding:14px}
-      .pill{padding:8px 12px;font-size:12px}
-      .download-btn{padding:10px 14px;font-size:13px}
-    }
+  @media (max-width: 480px){
+    .topbar h1{font-size:18px}
+    .iframe-box iframe{height:450px}
+    .topbar{padding:14px}
+    .pill{padding:8px 12px;font-size:12px}
+    .download-btn{padding:10px 14px;font-size:13px}
+  }
   </style>
 </head>
 <body>
@@ -339,12 +379,14 @@
     <i class="fa-solid fa-bars"></i>
   </button>
 
+
   <div class="layout">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
         <i class="fa-solid fa-fish-fins"></i>
         <h2>Portal KUB</h2>
       </div>
+
 
       <ul class="sidebar-menu">
         <li class="menu-item open">
@@ -356,6 +398,7 @@
       </ul>
     </aside>
 
+
     <main class="main">
       <div class="topbar">
         <div>
@@ -363,7 +406,7 @@
           <p>Form pengisian, form penilaian, spreadsheet data, dan dashboard Looker Studio.</p>
         </div>
         <div class="top-actions">
-          <a class="pill" href= "index.html">
+          <a class="pill" href="https://fransurbae.github.io/Portal-KUB/">
             <i class="fa-solid fa-house"></i> Kembali ke Beranda
           </a>
           <button class="pill primary" onclick="showForm('pengisian')">
@@ -375,9 +418,10 @@
         </div>
       </div>
 
+
       <div class="stack">
         <!-- Form Pengisian Container -->
-        <div id="formPengisian" class="form-container">
+        <div id="formPengisian" class="form-container active">
           <div class="card">
             <h2 class="section-title">Form Pengisian Hasil Tangkapan</h2>
             <p class="section-desc">
@@ -392,15 +436,18 @@
               </iframe>
             </div>
 
+
             <div class="form-alt-link">
               <i class="fa-solid fa-triangle-exclamation"></i> 
               Jika form tidak muncul di iframe, <a href="https://docs.google.com/forms/d/e/1FAIpQLScknvtP9eHayjmDEoTzU93PBTHAesfS5M4Ae_in0jt0obWBxw/viewform?usp=dialog" target="_blank" rel="noopener">klik di sini untuk membuka form di tab baru</a>.
             </div>
 
+
             <div class="note">
               <strong>Tips:</strong> Jika menggunakan handphone dan form sulit diakses, klik tombol di atas untuk membuka form di tab baru. Pastikan pengaturan Google Form sudah di-set ke "Anyone can respond".
             </div>
           </div>
+
 
           <!-- Spreadsheet Pengisian -->
           <div class="card">
@@ -416,6 +463,7 @@
               </iframe>
             </div>
           </div>
+
 
           <!-- Looker Studio Pengisian -->
           <div class="card">
@@ -433,6 +481,7 @@
           </div>
         </div>
 
+
         <!-- Form Penilaian Container -->
         <div id="formPenilaian" class="form-container">
           <div class="card">
@@ -449,15 +498,18 @@
               </iframe>
             </div>
 
+
             <div class="form-alt-link">
               <i class="fa-solid fa-triangle-exclamation"></i> 
               Jika form tidak muncul di iframe, <a href="https://docs.google.com/forms/d/e/1FAIpQLScZzLRtfK3fIkpcFp5jZD0Cs8HIzr7WxB69xmRA2AFO_ZmqTg/viewform?usp=dialog" target="_blank" rel="noopener">klik di sini untuk membuka form di tab baru</a>.
             </div>
 
+
             <div class="note">
               <strong>Tips:</strong> Jika menggunakan handphone dan form sulit diakses, klik tombol di atas untuk membuka form di tab baru. Pastikan pengaturan Google Form sudah di-set ke "Anyone can respond".
             </div>
           </div>
+
 
           <!-- Spreadsheet Penilaian -->
           <div class="card">
@@ -488,6 +540,7 @@
             </div>
           </div>
 
+
           <!-- Looker Studio Penilaian -->
           <div class="card">
             <h2 class="section-title">Dashboard Looker Studio - Form Penilaian</h2>
@@ -507,39 +560,46 @@
     </main>
   </div>
 
+
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const mobileToggle = document.getElementById('mobileToggle');
+  const sidebar = document.getElementById('sidebar');
+  const mobileToggle = document.getElementById('mobileToggle');
 
-    function toggleSidebar(){
-      sidebar.classList.toggle('open');
-      mobileToggle.setAttribute('aria-expanded', sidebar.classList.contains('open') ? 'true' : 'false');
+
+  function toggleSidebar(){
+    sidebar.classList.toggle('open');
+    mobileToggle.setAttribute('aria-expanded', sidebar.classList.contains('open') ? 'true' : 'false');
+  }
+
+
+  function toggleSubmenu(btn){
+    btn.classList.toggle('active');
+  }
+
+
+  function showForm(type){
+    document.querySelectorAll('.form-container').forEach(form => {
+      form.classList.remove('active');
+    });
+
+
+    if(type === 'pengisian'){
+      document.getElementById('formPengisian').classList.add('active');
+    } else if(type === 'penilaian'){
+      document.getElementById('formPenilaian').classList.add('active');
     }
 
-    function toggleSubmenu(btn){
-      btn.classList.toggle('active');
-    }
 
-    function showForm(type){
-      document.querySelectorAll('.form-container').forEach(form => {
-        form.classList.remove('active');
-      });
-
-      if(type === 'pengisian'){
-        document.getElementById('formPengisian').classList.add('active');
-      } else if(type === 'penilaian'){
-        document.getElementById('formPenilaian').classList.add('active');
+    setTimeout(() => {
+      const activeForm = document.querySelector('.form-container.active');
+      if(activeForm){
+        activeForm.scrollIntoView({behavior: 'smooth', block: 'start'});
       }
+    }, 100);
+  }
 
-      setTimeout(() => {
-        const activeForm = document.querySelector('.form-container.active');
-        if(activeForm){
-          activeForm.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }
-      }, 100);
-    }
 
-    mobileToggle.addEventListener('click', toggleSidebar);
+  mobileToggle.addEventListener('click', toggleSidebar);
   </script>
 </body>
 </html>
