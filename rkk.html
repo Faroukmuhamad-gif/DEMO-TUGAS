@@ -18,7 +18,7 @@
         align-items: center;
         min-height: 100vh;
         padding-bottom: 50px;
-        gap: 40px; /* Jarak antar widget */
+        gap: 20px; /* Jarak antar elemen diperkecil agar lebih padat */
     }
     
     /* Navbar / Tombol Beranda Sticky */
@@ -50,6 +50,36 @@
         background: #1d4ed8;
     }
 
+    /* --- MENU NAVIGASI TOMBOL --- */
+    .nav-menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 1000px;
+        padding: 10px 20px;
+    }
+    .nav-btn {
+        padding: 12px 20px;
+        border: none;
+        background: #e2e8f0;
+        color: #334155;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .nav-btn:hover {
+        background: #cbd5e1;
+    }
+    .nav-btn.active {
+        background: #2563eb;
+        color: white;
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
     /* Pengaturan Umum Iframe */
     iframe {
         border: none;
@@ -59,38 +89,57 @@
         max-width: 100%;
     }
     
-    /* Ukuran Khusus Google Form */
+    /* Ukuran Khusus */
     .form-frame {
         width: 700px;
         height: 520px;
     }
-    
-    /* Ukuran Khusus Google Spreadsheet */
     .sheet-frame {
         width: 100%;
         max-width: 1000px;
         height: 600px;
     }
-    
-    /* Ukuran Khusus Looker Studio */
     .looker-frame {
         width: 100%;
         max-width: 1000px;
         height: 750px;
     }
 
+    /* Sistem Tab (Sembunyikan iframe yang tidak aktif) */
+    .content-frame {
+        display: none;
+    }
+    .content-frame.active-frame {
+        display: block;
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Responsif untuk Smartphone */
     @media (max-width: 768px) {
         body {
-            padding: 0 10px 40px 10px;
-            gap: 25px;
+            padding: 0 0 40px 0;
+            gap: 15px;
         }
         .top-bar {
-            justify-content: center; /* Tombol ke tengah jika di HP */
+            justify-content: center;
         }
         .back-btn {
             width: 100%;
             justify-content: center;
+        }
+        .nav-btn {
+            flex: 1 1 45%; /* Tombol menyesuaikan lebar layar di HP */
+            text-align: center;
+            font-size: 13px;
+            padding: 10px;
+        }
+        .form-frame, .sheet-frame, .looker-frame {
+            width: 95%; /* Margin sedikit di HP */
         }
     }
 </style>
@@ -103,8 +152,17 @@
         </a>
     </div>
 
+    <div class="nav-menu">
+        <button class="nav-btn active" onclick="openTab('formUtama', this)">Form Utama</button>
+        <button class="nav-btn" onclick="openTab('formKepuasan', this)">Form Kepuasan</button>
+        <button class="nav-btn" onclick="openTab('sheetUtama', this)">Data Utama</button>
+        <button class="nav-btn" onclick="openTab('sheetKepuasan', this)">Data Kepuasan</button>
+        <button class="nav-btn" onclick="openTab('lookerStudio', this)">Looker Studio</button>
+    </div>
+
     <iframe 
-        class="form-frame"
+        id="formUtama"
+        class="content-frame form-frame active-frame"
         src="https://docs.google.com/forms/d/e/1FAIpQLScqIsQeHb8affnSnDqXkjUtaH9vui0cHv8vW2GdwnEsf7InTg/viewform?embedded=true" 
         frameborder="0" 
         marginheight="0" 
@@ -113,18 +171,59 @@
     </iframe>
 
     <iframe 
-        class="sheet-frame"
+        id="formKepuasan"
+        class="content-frame form-frame"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSelnVlDQLb5uVvgzBE9GW_QbA0erBmVoMJ7F1tWzHkGrp5gEg/viewform?embedded=true" 
+        frameborder="0" 
+        marginheight="0" 
+        marginwidth="0">
+        Memuat…
+    </iframe>
+
+    <iframe 
+        id="sheetUtama"
+        class="content-frame sheet-frame"
         src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT8PtlC-_R_p6oS449S86IuJYd4xUi604fAd889KrX4dH0G9eytvrJdscKPs_ypw5CXvNVPuma8fpvo/pubhtml?widget=true&amp;headers=false">
         Memuat…
     </iframe>
 
     <iframe 
-        class="looker-frame"
+        id="sheetKepuasan"
+        class="content-frame sheet-frame"
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSpgvgZ4Ptheg8N0LQfZwgkBcNcuJYlR1tzg3bS-IZkvAAu6PIMjNqLezCswdvz3qUBVy5s4dGN0XnN/pubhtml?widget=true&amp;headers=false">
+        Memuat…
+    </iframe>
+
+    <iframe 
+        id="lookerStudio"
+        class="content-frame looker-frame"
         src="https://datastudio.google.com/embed/reporting/bac02107-99d8-4b8c-ae55-88e166afa4fa/page/page_12345"
         allowfullscreen
         sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
         Memuat…
     </iframe>
+
+    <script>
+        function openTab(tabId, btnElement) {
+            // 1. Sembunyikan semua iframe
+            var frames = document.getElementsByClassName("content-frame");
+            for (var i = 0; i < frames.length; i++) {
+                frames[i].classList.remove("active-frame");
+            }
+
+            // 2. Hapus status 'active' dari semua tombol
+            var btns = document.getElementsByClassName("nav-btn");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+
+            // 3. Tampilkan iframe yang dipilih
+            document.getElementById(tabId).classList.add("active-frame");
+
+            // 4. Beri warna pada tombol yang sedang di-klik
+            btnElement.classList.add("active");
+        }
+    </script>
 
 </body>
 </html>
