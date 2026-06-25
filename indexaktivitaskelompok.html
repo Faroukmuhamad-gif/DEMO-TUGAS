@@ -1,168 +1,361 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Monitoring & Kepuasan</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <style>
-        body {
-            background-color: #f4f6f9;
-        }
-        .navbar-custom {
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-        }
-        .dashboard-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            margin-bottom: 25px;
-            border: none;
-        }
-        /* Pembungkus Iframe agar Responsif */
-        .iframe-wrapper {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 8px;
-            border: 1px solid #e3e6f0;
-        }
-        .ratio-spreadsheet {
-            padding-top: 55%; /* Proporsi ideal spreadsheet di desktop */
-            height: 0;
-        }
-        .ratio-spreadsheet iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-        .ratio-datastudio {
-            padding-top: 65%; /* Proporsi ideal Looker Studio */
-            height: 0;
-        }
-        .ratio-datastudio iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-        /* Kustomisasi Tab Navigasi */
-        .nav-pills .nav-link.active {
-            background-color: #0d6efd;
-        }
-        .nav-pills .nav-link {
-            color: #495057;
-            font-weight: 500;
-            background-color: #fff;
-            border: 1px solid #dee2e6;
-            margin-right: 5px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Monitoring & Kepuasan - Portal KUB</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+  <style>
+    /* CSS Variabel Resmi Kelompok */
+    :root {
+      --bg: #f4f7f6;
+      --card: #ffffff;
+      --primary: #1abc9c;
+      --primary-dark: #16a085;
+      --sidebar: #2c3e50;
+      --sidebar-dark: #1a252f;
+      --text: #2d3436;
+      --muted: #636e72;
+      --line: #e5e7eb;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius: 18px;
+      --sidebar-w: 260px;
+      --sidebar-c: 76px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(26,188,156,.10), transparent 30%),
+        radial-gradient(circle at right top, rgba(52,152,219,.09), transparent 26%),
+        var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Layout Utama */
+    .layout { display: flex; min-height: 100vh; }
+
+    /* Sidebar Gaya Kelompok */
+    .sidebar {
+      width: var(--sidebar-c);
+      background: linear-gradient(180deg, var(--sidebar) 0%, #233140 100%);
+      color: #ecf0f1;
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 50;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .3s ease, width .3s ease;
+    }
+    .sidebar.open,
+    .sidebar:hover { width: var(--sidebar-w); }
+
+    .brand {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 18px;
+      background: var(--sidebar-dark);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      white-space: nowrap;
+    }
+    .brand i { color: var(--primary); font-size: 24px; min-width: 28px; text-align: center; }
+    .brand h2 {
+      font-size: 16px;
+      font-weight: 700;
+      opacity: 0;
+      margin-bottom: 0;
+      transition: .25s ease;
+      color: #fff;
+    }
+    .sidebar.open .brand h2,
+    .sidebar:hover .brand h2 { opacity: 1; }
+
+    /* Menu Sidebar menggunakan Nav-Pills Bootstrap */
+    .sidebar-menu { list-style: none; padding: 12px 0; margin: 0; }
+    .menu-item { margin: 6px 10px; }
+    
+    .sidebar .nav-link {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border: none;
+      background: transparent;
+      color: #cbd5e1;
+      border-radius: 14px;
+      transition: .25s ease;
+      text-align: left;
+    }
+    .sidebar .nav-link i { width: 28px; text-align: center; font-size: 18px; }
+    
+    .menu-label { 
+      opacity: 0; 
+      transition: .25s ease; 
+      white-space: nowrap; 
+      font-size: 14px; 
+      font-weight: 500; 
+    }
+    .sidebar.open .menu-label,
+    .sidebar:hover .menu-label { opacity: 1; }
+
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active { 
+      background: rgba(255, 255, 255, .08) !important; 
+      color: #fff !important; 
+      box-shadow: none;
+    }
+    .sidebar .nav-link.active i { color: var(--primary); }
+
+    /* Area Konten Utama */
+    .main {
+      margin-left: var(--sidebar-c);
+      width: calc(100% - var(--sidebar-c));
+      padding: 20px;
+      transition: margin-left .3s ease, width .3s ease;
+    }
+    .sidebar.open ~ .main,
+    .sidebar:hover ~ .main {
+      margin-left: var(--sidebar-w);
+      width: calc(100% - var(--sidebar-w));
+    }
+
+    /* Topbar Atas */
+    .topbar {
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.7);
+      box-shadow: var(--shadow);
+      border-radius: 22px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .topbar h1 { font-size: 22px; color: #1f2d3d; margin-bottom: 4px; font-weight: 600; }
+
+    /* Custom Dashboard Card */
+    .dashboard-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.6);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    .card-title-custom {
+      font-size: 16px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 16px;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 10px;
+    }
+
+    /* Pembungkus Iframe Responsif */
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .ratio-spreadsheet {
+      padding-top: 55%;
+      height: 0;
+    }
+    .ratio-spreadsheet iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .ratio-datastudio {
+      padding-top: 65%;
+      height: 0;
+    }
+    .ratio-datastudio iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+    }
+
+    /* Tombol Kustom */
+    .btn-fill-danger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: .25s ease;
+      box-shadow: 0 4px 14px rgba(231,76,60,.15);
+      text-decoration: none;
+      background: #e74c3c;
+      color: #fff;
+    }
+    .btn-fill-danger:hover {
+      background: #c0392b;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .btn-fill-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: .25s ease;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      background: var(--sidebar);
+      color: #fff;
+    }
+    .btn-fill-secondary:hover {
+      background: var(--sidebar-dark);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Animasi Tab Transisi */
+    .tab-pane { animation: fadeIn .35s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-custom sticky-top py-3 mb-4">
-        <div class="container d-flex justify-content-between align-items-center">
-            <span class="navbar-brand mb-0 h1 fw-bold text-primary">
-                <i class="bi bi-speedometer2 me-2"></i>Sistem Terintegrasi
-            </span>
-            <a href="https://faroukmuhamad-gif.github.io/DEMO-TUGAS/" class="btn btn-outline-danger fw-semibold shadow-sm">
-                <i class="bi bi-house-door-fill me-2"></i>Kembali ke Beranda
-            </a>
-        </div>
-    </nav>
+  <div class="layout">
+    
+    <aside class="sidebar">
+      <div class="brand">
+        <i class="bi bi-speedometer2"></i>
+        <h2>Sistem KUB</h2>
+      </div>
+      
+      <ul class="sidebar-menu nav nav-pills" id="dashboardTab" role="tablist">
+        <li class="menu-item" role="presentation">
+          <button class="nav-link active" id="utama-tab" data-bs-toggle="tab" data-bs-target="#utama" type="button" role="tab">
+            <i class="bi bi-file-earmark-text"></i>
+            <span class="menu-label">Form Utama</span>
+          </button>
+        </li>
+        <li class="menu-item" role="presentation">
+          <button class="nav-link" id="kepuasan-tab" data-bs-toggle="tab" data-bs-target="#kepuasan" type="button" role="tab">
+            <i class="bi bi-heart-pulse"></i>
+            <span class="menu-label">Form Kepuasan</span>
+          </button>
+        </li>
+        <li class="menu-item" role="presentation">
+          <button class="nav-link" id="studio-tab" data-bs-toggle="tab" data-bs-target="#studio" type="button" role="tab">
+            <i class="bi bi-bar-chart-line"></i>
+            <span class="menu-label">Looker Studio</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
 
-    <div class="container">
+    <main class="main">
+      
+      <header class="topbar">
+        <div>
+          <h1>Dashboard Monitoring & Kepuasan</h1>
+        </div>
+        <div>
+          <a href="https://faroukmuhamad-gif.github.io/DEMO-TUGAS/" class="btn-fill-danger">
+            <i class="bi bi-house-door-fill"></i>Kembali ke Beranda
+          </a>
+        </div>
+      </header>
+
+      <div class="tab-content" id="dashboardTabContent">
         
-        <div class="row mb-4">
+        <div class="tab-pane fade show active" id="utama" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-5">
+              <div class="dashboard-card">
+                <h4 class="card-title-custom"><i class="bi bi-pencil-square me-2" style="color: var(--primary);"></i>Formulir Input Utama</h4>
+                <div class="iframe-wrapper">
+                  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfM-3MdAWnNfsol9LXBN94_Kpal7eoX6zdGrsjXb7KOxwtWqA/viewform?embedded=true" width="100%" height="740" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="dashboard-card">
+                <h4 class="card-title-custom"><i class="bi bi-table me-2" style="color: var(--primary);"></i>Data Spreadsheet Utama</h4>
+                <div class="iframe-wrapper ratio-spreadsheet">
+                  <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQy9L9t93cSEVC2MTdT4csYv-tOTsJMljHbx19ngZH1Jbw-9-0PgcgeLQa0G_-o7bv7eIwPDGV73RR7/pubhtml?widget=true&amp;headers=false"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="kepuasan" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-5">
+              <div class="dashboard-card">
+                <h4 class="card-title-custom"><i class="bi bi-emoji-smile me-2" style="color: var(--primary);"></i>Form Tingkat Kepuasan</h4>
+                <div class="iframe-wrapper">
+                  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc0nOK4Y2crgeXXgfJDmdOKBQA1_QozPbcHR-GvvgoTYFIwFQ/viewform?embedded=true" width="100%" height="550" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="dashboard-card">
+                <h4 class="card-title-custom"><i class="bi bi-table me-2" style="color: var(--primary);"></i>Data Spreadsheet Kepuasan</h4>
+                <div class="iframe-wrapper ratio-spreadsheet">
+                  <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTNpJtGRk0eL-jtKrESNhKV5W9kCVB0CPatKPEFSFvnHfFV2Jx7jWtsuzIPBcsw3GlBU4tf0ypkR6Eg/pubhtml?widget=true&amp;headers=false"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="studio" role="tabpanel">
+          <div class="row">
             <div class="col-12">
-                <ul class="nav nav-pills justify-content-center" id="dashboardTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="utama-tab" data-bs-toggle="tab" data-bs-target="#utama" type="button" role="tab">
-                            <i class="bi bi-file-earmark-text me-1"></i> Form Utama & Spreadsheet
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="kepuasan-tab" data-bs-toggle="tab" data-bs-target="#kepuasan" type="button" role="tab">
-                            <i class="bi bi-heart-pulse me-1"></i> Form Kepuasan & Spreadsheet
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="studio-tab" data-bs-toggle="tab" data-bs-target="#studio" type="button" role="tab">
-                            <i class="bi bi-bar-chart-line me-1"></i> Looker Data Studio
-                        </button>
-                    </li>
-                </ul>
+              <div class="dashboard-card">
+                <h4 class="card-title-custom"><i class="bi bi-pie-chart-fill me-2" style="color: var(--primary);"></i>Visualisasi Data Studio</h4>
+                <div class="iframe-wrapper ratio-datastudio">
+                  <iframe src="https://datastudio.google.com/embed/reporting/04f15183-1a6f-4892-9ffe-5ea03bf8a43e/page/page_12345" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
 
-        <div class="tab-content" id="dashboardTabContent">
-            
-            <div class="tab-pane fade show active" id="utama" role="tabpanel">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="dashboard-card">
-                            <h4 class="h5 fw-bold text-secondary mb-3 border-bottom pb-2"><i class="bi bi-pencil-square me-2"></i>Formulir Input Utama</h4>
-                            <div class="iframe-wrapper">
-                                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfM-3MdAWnNfsol9LXBN94_Kpal7eoX6zdGrsjXb7KOxwtWqA/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="dashboard-card">
-                            <h4 class="h5 fw-bold text-secondary mb-3 border-bottom pb-2"><i class="bi bi-table me-2"></i>Data Spreadsheet Utama</h4>
-                            <div class="iframe-wrapper ratio-spreadsheet">
-                                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQy9L9t93cSEVC2MTdT4csYv-tOTsJMljHbx19ngZH1Jbw-9-0PgcgeLQa0G_-o7bv7eIwPDGV73RR7/pubhtml?widget=true&amp;headers=false"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
 
-            <div class="tab-pane fade" id="kepuasan" role="tabpanel">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="dashboard-card">
-                            <h4 class="h5 fw-bold text-secondary mb-3 border-bottom pb-2"><i class="bi bi-emoji-smile me-2"></i>Form Tingkat Kepuasan</h4>
-                            <div class="iframe-wrapper">
-                                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc0nOK4Y2crgeXXgfJDmdOKBQA1_QozPbcHR-GvvgoTYFIwFQ/viewform?embedded=true" width="100%" height="550" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="dashboard-card">
-                            <h4 class="h5 fw-bold text-secondary mb-3 border-bottom pb-2"><i class="bi bi-table me-2"></i>Data Spreadsheet Kepuasan</h4>
-                            <div class="iframe-wrapper ratio-spreadsheet">
-                                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTNpJtGRk0eL-jtKrESNhKV5W9kCVB0CPatKPEFSFvnHfFV2Jx7jWtsuzIPBcsw3GlBU4tf0ypkR6Eg/pubhtml?widget=true&amp;headers=false"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <footer class="text-center my-5">
+        <a href="https://faroukmuhamad-gif.github.io/DEMO-TUGAS/" class="btn-fill-secondary">
+          <i class="bi bi-arrow-left-circle"></i>Kembali ke Halaman Beranda Utama
+        </a>
+      </footer>
 
-            <div class="tab-pane fade" id="studio" role="tabpanel">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="dashboard-card">
-                            <h4 class="h5 fw-bold text-secondary mb-3 border-bottom pb-2"><i class="bi bi-pie-chart-fill me-2"></i>Visualisasi Data Studio</h4>
-                            <div class="iframe-wrapper ratio-datastudio">
-                                <iframe src="https://datastudio.google.com/embed/reporting/04f15183-1a6f-4892-9ffe-5ea03bf8a43e/page/page_12345" frameborder="0" style="border:0" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    </main>
+  </div>
 
-        </div>
-
-        <div class="text-center my-5">
-            <a href="https://faroukmuhamad-gif.github.io/DEMO-TUGAS/" class="btn btn-secondary shadow-sm">
-                <i class="bi bi-arrow-left-circle me-2"></i>Kembali ke Halaman Beranda Utama
-            </a>
-        </div>
-
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
