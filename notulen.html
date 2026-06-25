@@ -15,11 +15,16 @@
       --primary: #1abc9c;
       --primary-dark: #16a085;
       --sidebar: #2c3e50;
+      --sidebar-dark: #1a252f;
       --text: #2d3436;
+      --muted: #636e72;
+      --line: #e5e7eb;
       --orange: #e67e22;
       --blue: #3498db;
-      --shadow: 0 10px 30px rgba(0,0,0,.06);
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
       --radius: 18px;
+      --sidebar-w: 260px;
+      --sidebar-c: 76px;
     }
 
     * { 
@@ -34,85 +39,168 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: var(--bg);
+      background: 
+        radial-gradient(circle at top left, rgba(26,188,156,.10), transparent 30%),
+        radial-gradient(circle at right top, rgba(52,152,219,.09), transparent 26%),
+        var(--bg);
       color: var(--text);
-      padding: 30px 20px;
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 1050px;
-      margin: 0 auto;
-    }
-
-    /* KONTANER MENU NAVIGASI */
-    .menu-navigation {
+    /* UTOR LAYOUT UTAMA */
+    .layout {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 35px;
+      min-height: 100vh;
     }
 
-    /* Tombol Utama: Kembali Ke Home */
-    .back-to-home {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 28px;
-      color: #cbd5e1;
-      text-decoration: none;
+    /* TOMBOL TOGGLE MOBILE */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 60;
+      width: 46px;
+      height: 46px;
+      border: none;
       border-radius: 14px;
+      background: var(--sidebar-dark);
+      color: #fff;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    /* KOMPONEN SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-c);
+      background: linear-gradient(180deg, var(--sidebar) 0%, #233140 100%);
+      color: #ecf0f1;
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 50;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .3s ease, width .3s ease;
+    }
+
+    .sidebar.open,
+    .sidebar:hover {
+      width: var(--sidebar-w);
+    }
+
+    .brand {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 18px;
+      background: var(--sidebar-dark);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      white-space: nowrap;
+    }
+
+    .brand i {
+      color: var(--primary);
+      font-size: 24px;
+      min-width: 28px;
+      text-align: center;
+    }
+
+    .brand h2 {
+      font-size: 16px;
+      font-weight: 700;
+      opacity: 0;
+      transition: .25s ease;
+    }
+
+    .sidebar.open .brand h2,
+    .sidebar:hover .brand h2 {
+      opacity: 1;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 12px 0;
+    }
+
+    .menu-item {
+      margin: 6px 10px;
+    }
+
+    .menu-link {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border: none;
+      background: transparent;
+      color: #cbd5e1;
+      cursor: pointer;
+      border-radius: 14px;
+      transition: .25s ease;
+      text-decoration: none;
       font-size: 14px;
       font-weight: 500;
-      transition: all 0.3s ease;
-      background: linear-gradient(135deg, var(--sidebar) 0%, #233140 100%);
-      box-shadow: var(--shadow);
-      width: fit-content;
     }
 
-    .back-to-home:hover {
-      background: #1a252f;
-      color: #ffffff;
-      transform: translateX(-4px);
+    .menu-link i {
+      width: 28px;
+      text-align: center;
+      font-size: 18px;
     }
 
-    /* Group Tombol Pintas Form */
-    .shortcut-group {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+    .menu-label {
+      opacity: 0;
+      transition: .25s ease;
+      white-space: nowrap;
     }
 
-    /* Tombol Pintas Form */
-    .btn-shortcut {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 24px;
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow);
+    .sidebar.open .menu-label,
+    .sidebar:hover .menu-label {
+      opacity: 1;
     }
 
-    .btn-shortcut.notulen { background: linear-gradient(135deg, var(--blue) 0%, #2980b9 100%); }
-    .btn-shortcut.kepuasan { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); }
-
-    .btn-shortcut:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.1);
+    .menu-link:hover,
+    .menu-link.active {
+      background: rgba(255,255,255,.08);
+      color: #fff;
     }
 
-    /* KONTANER BOX UTAMA */
+    .menu-link.btn-nav-home {
+      background: rgba(26,188,156,.15);
+      color: var(--primary);
+    }
+    .menu-link.btn-nav-home:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* KONTEN UTAMA */
+    .main {
+      margin-left: var(--sidebar-c);
+      width: calc(100% - var(--sidebar-c));
+      padding: 30px;
+      transition: margin-left .3s ease, width .3s ease;
+    }
+
+    .sidebar.open ~ .main,
+    .sidebar:hover ~ .main {
+      margin-left: var(--sidebar-w);
+      width: calc(100% - var(--sidebar-w));
+    }
+
+    /* PANEL BOX KONTEN */
     .content-box {
       background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 24px;
-      margin-bottom: 35px;
-      border: 1px solid rgba(0,0,0,0.02);
+      margin-bottom: 30px;
+      border: 1px solid rgba(255,255,255,.6);
     }
 
     .content-box h3 {
@@ -127,15 +215,13 @@
       padding-bottom: 12px;
     }
 
-    /* Pengaturan Frame Google Form */
+    /* IFRAME DAN RESPONSIVE CONTAINER */
     .form-iframe {
       width: 100%;
-      height: 800px;
       border: none;
       border-radius: 12px;
     }
 
-    /* Pengaturan Frame Google Sheets Responsif */
     .sheet-container {
       position: relative;
       width: 100%;
@@ -155,86 +241,173 @@
       border: none;
     }
 
-    /* Sinkronisasi Responsif Layar Smartphone */
+    .flex-grid {
+      display: flex; 
+      gap: 20px; 
+      flex-wrap: wrap; 
+      margin-top: 20px;
+    }
+
+    .flex-col {
+      flex: 1; 
+      min-width: 320px;
+    }
+
+    /* SINKRONISASI LAYAR RESPONSIF SMARTPHONE */
     @media (max-width: 768px) {
-      body { padding: 15px 10px; }
-      .form-iframe { height: 1100px; }
-      .sheet-container { padding-bottom: 130%; }
-      .back-to-home, .shortcut-group, .btn-shortcut { width: 100%; justify-content: center; }
+      .mobile-toggle {
+        display: flex;
+      }
+      .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-w);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 70px 15px 20px 15px;
+      }
+      .sidebar.open .menu-label,
+      .brand h2 {
+        opacity: 1;
+      }
+      .form-iframe {
+        height: 1000px !important;
+      }
+      .sheet-container {
+        padding-bottom: 120%;
+      }
+      .flex-grid {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <!-- Tombol Menu Mobile -->
+  <button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <div class="layout">
     
-    <div class="menu-navigation">
-      <a href="index.html" class="back-to-home">
-        <i class="fa-solid fa-house"></i> Kembali ke Halaman Utama KUB
-      </a>
-      
-      <div class="shortcut-group">
-        <a href="#section-form-notulen" class="btn-shortcut notulen">
-          <i class="fa-solid fa-file-pen"></i> Lompat ke Form Pencatatan Notulensi
-        </a>
-        <a href="#section-form-kepuasan" class="btn-shortcut kepuasan">
-          <i class="fa-solid fa-square-poll-vertical"></i> Lompat ke Form Kepuasan Sistem
-        </a>
+    <!-- Elemen Sidebar Kiri -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-anchor"></i>
+        <h2>SIM PERIKANAN</h2>
       </div>
-    </div>
+      <ul class="sidebar-menu">
+        <li class="menu-item">
+          <a href="index.html" class="menu-link btn-nav-home">
+            <i class="fa-solid fa-house"></i>
+            <span class="menu-label">Beranda KUB</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#section-form-notulen" class="menu-link">
+            <i class="fa-solid fa-file-pen"></i>
+            <span class="menu-label">Form Notulensi</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#section-database" class="menu-link">
+            <i class="fa-solid fa-database"></i>
+            <span class="menu-label">Database Sheet</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#section-looker-studio" class="menu-link">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span class="menu-label">Looker Studio</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#section-form-kepuasan" class="menu-link">
+            <i class="fa-solid fa-user-check"></i>
+            <span class="menu-label">Evaluasi Sistem</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#section-pieces" class="menu-link">
+            <i class="fa-solid fa-square-poll-vertical"></i>
+            <span class="menu-label">Matriks PIECES</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
 
+    <!-- Area Konten Utama -->
+    <main class="main">
 
-    <div class="content-box" id="section-form-notulen">
-  <h3><i class="fa-solid fa-folder-plus" style="color: var(--blue);"></i> Form Utama: Input Pencatatan Notulensi Rapat</h3>
-  <iframe class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSdDYQ2UbpKCJqumPknr7ZNZC-xzjB1yffbTLEeujWmEpyYutg/viewform?embedded=true" style="width: 100%; height: 1121px; border: none;">
-    Memuat Formulir Notulensi…
-  </iframe>
-  </div>
-
-
-    <div class="content-box">
-  <h3><i class="fa-solid fa-clipboard-list" style="color: var(--blue);"></i> Tampilan Sheet: Riwayat & Data Notulensi Rapat</h3>
-  <div class="sheet-container">
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQnuCn56V7G7jR7U4I6kx3xpJtr7-O6myJmIqxyeizZUwO2m9uvNNZmIiVojJmMls3k4IIfMfNnyARj/pubhtml?gid=1202961793&single=true">
-      Memuat Database Notulensi…
-    </iframe>
-  </div>
-      
-      <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
-
-  <div class="content-box" id="section-form-notulen" style="flex: 1; min-width: 320px;">
-    <h3><i class="fa-solid fa-folder-plus" style="color: var(--blue);"></i> Form Utama: Input Pencatatan Notulensi Rapat</h3>
-    <iframe class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSdDYQ2UbpKCJqumPknr7ZNZC-xzjB1yffbTLEeujWmEpyYutg/viewform?embedded=true" style="width: 100%; height: 800px; border: none;">
-      Memuat Formulir Notulensi…
-    </iframe>
-  </div>
-
-  <div class="content-box" id="section-looker-studio" style="flex: 1; min-width: 320px;">
-    <h3><i class="fa-solid fa-chart-pie" style="color: var(--blue);"></i> Visualisasi Data Looker Studio</h3>
-    <iframe src="https://datastudio.google.com/embed/reporting/7f58be1a-1b6e-41a6-ab18-9a6313e06eeb/page/nWZ1F" style="width: 100%; height: 800px; border: none; background-color: white;" allowfullscreen>
-      Memuat Grafik Looker Studio…
-    </iframe>
-  </div>
-
-</div>
-    <div class="content-box" id="section-form-kepuasan">
-      <h3><i class="fa-solid fa-user-check" style="color: var(--primary);"></i> Form: Evaluasi Tingkat Kepuasan Sistem Informasi</h3>
-     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe26uMFEFUv0v2gYpKeUYXUSGZ7Tt6KPZp_Bi8cLcVCfqBmSQ/viewform?embedded=true" width="640" height="1292" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-        Memuat Formulir Evaluasi Kepuasan…
-      </iframe>
-    </div>
-
-
-    <div class="content-box">
-      <h3><i class="fa-solid fa-chart-pie" style="color: var(--orange);"></i> Tampilan Analisis: Matriks Kalkulasi Metode PIECES</h3>
-      <div class="sheet-container">
-        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTzw2QiwsG3MBItALGIBPx4PWKqBhDO4IlY4yKG9WQGBNjgk7oYfn000tM--VIa-jrCUtVSQstpjmOu/pubhtml?gid=1112788756&single=true&chrome=false&headers=false&rm=minimal">
-          Memuat Matriks Komputasi PIECES…
+      <!-- Modul Form Input Notulensi -->
+      <div class="content-box" id="section-form-notulen">
+        <h3><i class="fa-solid fa-folder-plus" style="color: var(--blue);"></i> Form Utama: Input Pencatatan Notulensi Rapat</h3>
+        <iframe class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSdDYQ2UbpKCJqumPknr7ZNZC-xzjB1yffbTLEeujWmEpyYutg/viewform?embedded=true" style="height: 800px;">
+          Memuat Formulir Notulensi…
         </iframe>
       </div>
-    </div>
 
+      <!-- Modul Tampilan Database Sheets -->
+      <div class="content-box" id="section-database">
+        <h3><i class="fa-solid fa-clipboard-list" style="color: var(--blue);"></i> Tampilan Database Terintegrasi</h3>
+        <div class="sheet-container">
+          <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQnuCn56V7G7jR7U4I6kx3xpJtr7-O6myJmIqxyeizZUwO2m9uvNNZmIiVojJmMls3k4IIfMfNnyARj/pubhtml?widget=true&amp;headers=false">
+            Memuat Database...
+          </iframe>
+        </div>
+      </div>
+          
+      <!-- Tata Letak Berdampingan (Flex Grid) untuk Looker Studio -->
+      <div class="flex-grid" id="section-looker-studio">
+        <div class="content-box flex-col">
+          <h3><i class="fa-solid fa-chart-pie" style="color: var(--blue);"></i> Visualisasi Data Looker Studio</h3>
+          <iframe src="https://datastudio.google.com/embed/reporting/7f58be1a-1b6e-41a6-ab18-9a6313e06eeb/page/nWZ1F" style="width: 100%; height: 800px; border: none; background-color: white;" allowfullscreen>
+            Memuat Grafik Looker Studio…
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Modul Form Evaluasi Kepuasan -->
+      <div class="content-box" id="section-form-kepuasan">
+        <h3><i class="fa-solid fa-user-check" style="color: var(--primary);"></i> Form: Evaluasi Tingkat Kepuasan Sistem Informasi</h3>
+        <iframe class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSe26uMFEFUv0v2gYpKeUYXUSGZ7Tt6KPZp_Bi8cLcVCfqBmSQ/viewform?embedded=true" style="height: 1000px;">
+          Memuat Formulir Evaluasi Kepuasan…
+        </iframe>
+      </div>
+
+      <!-- Modul Matriks Perhitungan PIECES -->
+      <div class="content-box" id="section-pieces">
+        <h3><i class="fa-solid fa-chart-line" style="color: var(--orange);"></i> Tampilan Analisis: Matriks Kalkulasi Metode PIECES</h3>
+        <div class="sheet-container">
+          <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTzw2QiwsG3MBItALGIBPx4PWKqBhDO4IlY4yKG9WQGBNjgk7oYfn000tM--VIa-jrCUtVSQstpjmOu/pubhtml?gid=1112788756&single=true&chrome=false&headers=false&rm=minimal">
+            Memuat Matriks Komputasi PIECES…
+          </iframe>
+        </div>
+      </div>
+
+    </main>
   </div>
 
+  <!-- Script Otomatisasi Responsif Sidebar -->
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Menutup sidebar otomatis saat link menu di-klik pada tampilan mobile
+    document.querySelectorAll('.menu-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          document.getElementById('sidebar').classList.remove('open');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
